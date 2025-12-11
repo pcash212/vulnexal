@@ -1,4 +1,4 @@
-const ValidationRules = {
+  const ValidationRules = {
   email: {
     pattern: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
     message: "Please enter a valid email address (e.g., user@example.com)",

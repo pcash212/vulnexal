@@ -1,6 +1,6 @@
-const VulnexModal = {
+const VulnexalModal = {
   create: (type, title, message, options = {}) => {
-    const existingModal = document.querySelector('.vulnex-modal-overlay');
+    const existingModal = document.querySelector('.vulnexal-modal-overlay');
     if (existingModal) existingModal.remove();
 
     const icons = {
@@ -11,13 +11,13 @@ const VulnexModal = {
     };
 
     const overlay = document.createElement('div');
-    overlay.className = 'vulnex-modal-overlay';
+    overlay.className = 'vulnexal-modal-overlay';
     
     const modal = document.createElement('div');
-    modal.className = 'vulnex-modal';
+    modal.className = 'vulnexal-modal';
     
     const closeBtn = options.showClose !== false ? `
-      <button class="vulnex-modal-close" onclick="VulnexModal.close()">
+      <button class="vulnexal-modal-close" onclick="VulnexalModal.close()">
         <i class="bi bi-x"></i>
       </button>
     ` : '';
@@ -26,30 +26,30 @@ const VulnexModal = {
     const secondaryBtnText = options.secondaryBtnText;
     
     const footerButtons = secondaryBtnText ? `
-      <button class="vulnex-modal-btn vulnex-modal-btn-secondary" onclick="VulnexModal.onSecondary()">
+      <button class="vulnexal-modal-btn vulnexal-modal-btn-secondary" onclick="VulnexalModal.onSecondary()">
         ${secondaryBtnText}
       </button>
-      <button class="vulnex-modal-btn vulnex-modal-btn-primary" onclick="VulnexModal.onPrimary()">
+      <button class="vulnexal-modal-btn vulnexal-modal-btn-primary" onclick="VulnexalModal.onPrimary()">
         ${primaryBtnText}
       </button>
     ` : `
-      <button class="vulnex-modal-btn vulnex-modal-btn-primary" onclick="VulnexModal.close()">
+      <button class="vulnexal-modal-btn vulnexal-modal-btn-primary" onclick="VulnexalModal.close()">
         ${primaryBtnText}
       </button>
     `;
     
     modal.innerHTML = `
       ${closeBtn}
-      <div class="vulnex-modal-header">
-        <div class="vulnex-modal-icon ${type}">
+      <div class="vulnexal-modal-header">
+        <div class="vulnexal-modal-icon ${type}">
           <i class="bi ${icons[type]}"></i>
         </div>
-        <h3 class="vulnex-modal-title">${title}</h3>
+        <h3 class="vulnexal-modal-title">${title}</h3>
       </div>
-      <div class="vulnex-modal-body">
-        <p class="vulnex-modal-message">${message}</p>
+      <div class="vulnexal-modal-body">
+        <p class="vulnexal-modal-message">${message}</p>
       </div>
-      <div class="vulnex-modal-footer">
+      <div class="vulnexal-modal-footer">
         ${footerButtons}
       </div>
     `;
@@ -57,18 +57,18 @@ const VulnexModal = {
     overlay.appendChild(modal);
     document.body.appendChild(overlay);
     
-    VulnexModal.primaryCallback = options.onPrimary || (() => VulnexModal.close());
-    VulnexModal.secondaryCallback = options.onSecondary || (() => VulnexModal.close());
+    VulnexalModal.primaryCallback = options.onPrimary || (() => VulnexalModal.close());
+    VulnexalModal.secondaryCallback = options.onSecondary || (() => VulnexalModal.close());
     
     setTimeout(() => overlay.classList.add('active'), 10);
     
     if (options.autoClose) {
-      setTimeout(() => VulnexModal.close(), options.autoClose);
+      setTimeout(() => VulnexalModal.close(), options.autoClose);
     }
     
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay && options.closeOnBackdrop !== false) {
-        VulnexModal.close();
+        VulnexalModal.close();
       }
     });
     
@@ -76,7 +76,7 @@ const VulnexModal = {
   },
 
   close: () => {
-    const overlay = document.querySelector('.vulnex-modal-overlay');
+    const overlay = document.querySelector('.vulnexal-modal-overlay');
     if (overlay) {
       overlay.classList.remove('active');
       setTimeout(() => overlay.remove(), 300);
@@ -84,45 +84,45 @@ const VulnexModal = {
   },
 
   onPrimary: () => {
-    if (VulnexModal.primaryCallback) {
-      VulnexModal.primaryCallback();
+    if (VulnexalModal.primaryCallback) {
+      VulnexalModal.primaryCallback();
     }
   },
 
   onSecondary: () => {
-    if (VulnexModal.secondaryCallback) {
-      VulnexModal.secondaryCallback();
+    if (VulnexalModal.secondaryCallback) {
+      VulnexalModal.secondaryCallback();
     }
   },
 
   success: (message, title = 'Success!', options = {}) => {
-    return VulnexModal.create('success', title, message, options);
+    return VulnexalModal.create('success', title, message, options);
   },
 
   error: (message, title = 'Error!', options = {}) => {
-    return VulnexModal.create('error', title, message, options);
+    return VulnexalModal.create('error', title, message, options);
   },
 
   warning: (message, title = 'Warning!', options = {}) => {
-    return VulnexModal.create('warning', title, message, options);
+    return VulnexalModal.create('warning', title, message, options);
   },
 
   info: (message, title = 'Information', options = {}) => {
-    return VulnexModal.create('info', title, message, options);
+    return VulnexalModal.create('info', title, message, options);
   },
 
   confirm: (message, title = 'Confirm', options = {}) => {
     return new Promise((resolve) => {
-      VulnexModal.create('warning', title, message, {
+      VulnexalModal.create('warning', title, message, {
         ...options,
         primaryBtnText: options.primaryBtnText || 'Confirm',
         secondaryBtnText: options.secondaryBtnText || 'Cancel',
         onPrimary: () => {
-          VulnexModal.close();
+          VulnexalModal.close();
           resolve(true);
         },
         onSecondary: () => {
-          VulnexModal.close();
+          VulnexalModal.close();
           resolve(false);
         }
       });
@@ -130,4 +130,4 @@ const VulnexModal = {
   }
 };
 
-window.VulnexModal = VulnexModal;
+window.VulnexalModal = VulnexalModal;

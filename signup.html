@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vulnex - Sign Up</title>
+    <title>Vulnexal - Sign Up</title>
 
     
     <link
@@ -31,8 +31,8 @@
           >
             <div class="logo-section d-flex align-items-center gap-2">
               <i class="bi bi-shield-check text-success fs-3"></i>
-              <h1 class="h4 mb-0 text-dark fw-bold">
-                Vulnex
+              <h1 class="h4 mb-0 text-dark fw-bold" style="font-family: 'Arial Black', sans-serif; letter-spacing: 1px;">
+                Vulnexal
               </h1>
             </div>
           </div>
@@ -51,7 +51,7 @@
                 </div>
                 <h2 class="card-title h3 fw-bold mb-2">Create Account</h2>
                 <p class="text-muted mb-5">
-                  Join Vulnex today
+                  Join Vulnexal today
                 </p>
 
                 
@@ -454,6 +454,30 @@
         
         togglePassword("signup-password", "toggle-signup-password");
         togglePassword("signup-confirm-password", "toggle-signup-confirm-password");
+
+        // Enable Enter key to submit form
+        const signupInputs = [
+          document.getElementById("signup-name"),
+          document.getElementById("signup-email"),
+          document.getElementById("signup-username"),
+          document.getElementById("signup-password"),
+          document.getElementById("signup-confirm-password")
+        ];
+        
+        const handleSignupEnterKey = (event) => {
+          if (event.key === 'Enter' || event.keyCode === 13) {
+            event.preventDefault();
+            const form = document.getElementById("signup-form");
+            const submitButton = form?.querySelector('button[type="submit"]');
+            if (submitButton) {
+              submitButton.click();
+            }
+          }
+        };
+        
+        signupInputs.forEach(input => {
+          if (input) input.addEventListener('keypress', handleSignupEnterKey);
+        });
       }
       
       if (document.readyState === 'loading') {

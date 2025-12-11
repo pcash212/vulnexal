@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vulnex</title>
+    <title>Vulnexal</title>
 
     
     <link
@@ -31,8 +31,8 @@
           >
             <div class="logo-section d-flex align-items-center gap-2">
               <i class="bi bi-shield-check text-success fs-3"></i>
-              <h1 class="h4 mb-0 text-dark fw-bold">
-                Vulnex
+              <h1 class="h4 mb-0 text-dark fw-bold" style="font-family: 'Arial Black', sans-serif; letter-spacing: 1px;">
+                Vulnexal
               </h1>
             </div>
           </div>
@@ -51,7 +51,7 @@
                   </div>
                 </div>
                 <h2 class="card-title h3 fw-bold mb-2">
-                  Vulnex
+                  Vulnexal
                 </h2>
                 <p class="text-muted mb-5">Sign in to your account</p>
 
@@ -352,6 +352,24 @@
           icon.classList.toggle("bi-eye", !isPassword);
           icon.classList.toggle("bi-eye-slash", isPassword);
         });
+
+        // Enable Enter key to submit form
+        const emailInput = document.getElementById("login-email");
+        const passwordInput = document.getElementById("login-password");
+        
+        const handleEnterKey = (event) => {
+          if (event.key === 'Enter' || event.keyCode === 13) {
+            event.preventDefault();
+            const form = document.getElementById("login-form");
+            const submitButton = form?.querySelector('button[type="submit"]');
+            if (submitButton) {
+              submitButton.click();
+            }
+          }
+        };
+        
+        if (emailInput) emailInput.addEventListener('keypress', handleEnterKey);
+        if (passwordInput) passwordInput.addEventListener('keypress', handleEnterKey);
 
         const savedEmail = localStorage.getItem("rememberedEmail");
         if (savedEmail) {

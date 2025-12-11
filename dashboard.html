@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vulnex - Dashboard</title>
+    <title>Vulnexal - Dashboard</title>
 
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
@@ -27,7 +27,12 @@
                 <i class="bi bi-shield-check text-success fs-4"></i>
                 <span
                   class="navbar-brand mb-0 h6 h5-md text-success fw-bold text-truncate"
-                  >Vulnex</span
+                  style="
+                    font-family: 'Arial Black', sans-serif;
+                    letter-spacing: 1px;
+                    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+                  "
+                  >Vulnexal</span
                 >
               </div>
 
@@ -58,6 +63,7 @@
                   <ul
                     class="dropdown-menu dropdown-menu-end bg-dark border-success"
                     aria-labelledby="navMenuDropdown"
+                    style="min-width: 250px"
                   >
                     <li>
                       <a
@@ -66,6 +72,18 @@
                       >
                         <i class="bi bi-book text-info me-2"></i>Learn About
                         Vulnerabilities
+                      </a>
+                    </li>
+                    <li><hr class="dropdown-divider border-secondary" /></li>
+                    <li>
+                      <a
+                        class="dropdown-item text-light"
+                        href="#"
+                        data-bs-toggle="modal"
+                        data-bs-target="#aboutVulnexalModal"
+                      >
+                        <i class="bi bi-info-circle text-warning me-2"></i>About
+                        Vulnexal
                       </a>
                     </li>
                     <li><hr class="dropdown-divider border-secondary" /></li>
@@ -146,8 +164,10 @@
                     to Scan
                   </h5>
 
-                  <div class="row g-4">
-                    <div class="col-md-6 col-lg-3">
+                  <div class="d-flex flex-wrap gap-4">
+                    <div
+                      style="flex: 1 1 calc(33.333% - 1rem); min-width: 200px"
+                    >
                       <div class="form-check d-flex align-items-center">
                         <input
                           class="form-check-input form-check-lg"
@@ -165,7 +185,9 @@
                       </div>
                     </div>
 
-                    <div class="col-md-6 col-lg-3">
+                    <div
+                      style="flex: 1 1 calc(33.333% - 1rem); min-width: 200px"
+                    >
                       <div class="form-check d-flex align-items-center">
                         <input
                           class="form-check-input form-check-lg"
@@ -183,7 +205,9 @@
                       </div>
                     </div>
 
-                    <div class="col-md-6 col-lg-3">
+                    <div
+                      style="flex: 1 1 calc(33.333% - 1rem); min-width: 200px"
+                    >
                       <div class="form-check d-flex align-items-center">
                         <input
                           class="form-check-input form-check-lg"
@@ -201,7 +225,9 @@
                       </div>
                     </div>
 
-                    <div class="col-md-6 col-lg-3">
+                    <div
+                      style="flex: 1 1 calc(33.333% - 1rem); min-width: 200px"
+                    >
                       <div class="form-check d-flex align-items-center">
                         <input
                           class="form-check-input form-check-lg"
@@ -221,7 +247,9 @@
                       </div>
                     </div>
 
-                    <div class="col-md-6 col-lg-3">
+                    <div
+                      style="flex: 1 1 calc(33.333% - 1rem); min-width: 200px"
+                    >
                       <div class="form-check d-flex align-items-center">
                         <input
                           class="form-check-input form-check-lg"
@@ -239,7 +267,9 @@
                       </div>
                     </div>
 
-                    <div class="col-md-6 col-lg-3">
+                    <div
+                      style="flex: 1 1 calc(33.333% - 1rem); min-width: 200px"
+                    >
                       <div class="form-check d-flex align-items-center">
                         <input
                           class="form-check-input form-check-lg"
@@ -269,8 +299,8 @@
                 <i class="bi bi-graph-up me-2"></i>Latest Scan Results
               </h5>
 
-              <div class="row g-4 mb-4">
-                <div class="col-md-6 col-lg-4">
+              <div class="d-flex flex-wrap gap-4 mb-4">
+                <div style="flex: 1 1 calc(33.333% - 1rem); min-width: 280px">
                   <div
                     class="result-card card border-0 bg-dark text-light shadow-sm hover-card-lift"
                   >
@@ -292,7 +322,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-6 col-lg-4">
+                <div style="flex: 1 1 calc(33.333% - 1rem); min-width: 280px">
                   <div
                     class="result-card card border-0 bg-dark text-light shadow-sm hover-card-lift"
                   >
@@ -312,7 +342,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-6 col-lg-4">
+                <div style="flex: 1 1 calc(33.333% - 1rem); min-width: 280px">
                   <div
                     class="result-card card border-0 bg-dark text-light shadow-sm hover-card-lift"
                   >
@@ -332,7 +362,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-6 col-lg-4">
+                <div style="flex: 1 1 calc(33.333% - 1rem); min-width: 280px">
                   <div
                     class="result-card card border-0 bg-dark text-light shadow-sm hover-card-lift"
                   >
@@ -354,7 +384,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-6 col-lg-4">
+                <div style="flex: 1 1 calc(33.333% - 1rem); min-width: 280px">
                   <div
                     class="result-card card border-0 bg-dark text-light shadow-sm hover-card-lift"
                   >
@@ -376,7 +406,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-6 col-lg-4">
+                <div style="flex: 1 1 calc(33.333% - 1rem); min-width: 280px">
                   <div
                     class="result-card card border-0 bg-dark text-light shadow-sm hover-card-lift"
                   >
@@ -398,7 +428,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-6 col-lg-4">
+                <div style="flex: 1 1 calc(33.333% - 1rem); min-width: 280px">
                   <div
                     class="result-card card border-0 bg-dark text-light shadow-sm hover-card-lift"
                   >
@@ -477,6 +507,374 @@
 
     <div
       class="modal fade"
+      id="aboutVulnexalModal"
+      tabindex="-1"
+      aria-labelledby="aboutVulnexalModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div
+          class="modal-content"
+          style="
+            background: linear-gradient(
+              135deg,
+              #0f2027 0%,
+              #203a43 50%,
+              #2c5364 100%
+            );
+            border: 2px solid #00ff88;
+            border-radius: 15px;
+            box-shadow: 0 0 40px rgba(0, 255, 136, 0.3);
+          "
+        >
+          <div
+            class="modal-header border-0 py-4 px-5"
+            style="background: rgba(0, 255, 136, 0.05)"
+          >
+            <div class="d-flex align-items-center gap-3">
+              <div
+                style="
+                  width: 50px;
+                  height: 50px;
+                  background: linear-gradient(135deg, #00ff88, #00cc6a);
+                  border-radius: 10px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
+                <i class="bi bi-shield-check text-dark fs-3"></i>
+              </div>
+              <h3
+                class="modal-title fw-bold mb-0 text-light"
+                id="aboutVulnexalModalLabel"
+                style="
+                  font-family: 'Arial Black', sans-serif;
+                  letter-spacing: 2px;
+                  text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+                "
+              >
+                VULNEXAL
+              </h3>
+            </div>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+              style="filter: brightness(1.5)"
+            ></button>
+          </div>
+
+          <div
+            class="modal-body p-5"
+            style="max-height: 70vh; overflow-y: auto"
+          >
+            <div class="row g-4">
+              <div class="col-12">
+                <div
+                  class="card"
+                  style="
+                    background: rgba(0, 255, 136, 0.08);
+                    border: 1px solid rgba(0, 255, 136, 0.3);
+                    border-radius: 12px;
+                  "
+                >
+                  <div class="card-body p-4">
+                    <div class="d-flex align-items-center mb-3">
+                      <i class="bi bi-stars text-warning fs-4 me-2"></i>
+                      <h5 class="mb-0 fw-bold" style="color: #00ff88">
+                        Our Mission
+                      </h5>
+                    </div>
+                    <p
+                      class="text-light mb-0"
+                      style="font-size: 1.05rem; line-height: 1.8"
+                    >
+                      Vulnexal is a modern, innovative cybersecurity brand
+                      dedicated to creating tools that help secure digital
+                      environments. Our flagship project, the
+                      <strong style="color: #00ff88"
+                        >Vulnexal Vulnerability Scanner</strong
+                      >, is designed to help developers, security professionals,
+                      and organizations identify and fix vulnerabilities in web
+                      applications. With speed, precision, and practical
+                      insights, Vulnexal empowers users to strengthen their
+                      applications and improve security posture.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div
+                  class="card h-100"
+                  style="
+                    background: rgba(30, 60, 114, 0.4);
+                    border: 1px solid rgba(0, 255, 136, 0.2);
+                    border-radius: 12px;
+                  "
+                >
+                  <div class="card-body p-4">
+                    <div class="d-flex align-items-center mb-3">
+                      <i
+                        class="bi bi-envelope-fill fs-4 me-2"
+                        style="color: #00ff88"
+                      ></i>
+                      <h5 class="mb-0 fw-bold" style="color: #00ff88">
+                        Contact Us
+                      </h5>
+                    </div>
+                    <p class="text-light mb-3">
+                      Vulnexal is open for collaborations, partnerships, and
+                      professional inquiries.
+                    </p>
+                    <div
+                      class="d-flex align-items-center gap-2 p-3"
+                      style="
+                        background: rgba(0, 255, 136, 0.1);
+                        border-radius: 8px;
+                      "
+                    >
+                      <i class="bi bi-envelope-at-fill text-light"></i>
+                      <a
+                        href="mailto:contact@vulnexal.com"
+                        class="text-light fw-bold"
+                        style="text-decoration: none; font-size: 1.05rem"
+                      >
+                        contact@vulnexal.com
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div
+                  class="card h-100"
+                  style="
+                    background: rgba(30, 60, 114, 0.4);
+                    border: 1px solid rgba(0, 255, 136, 0.2);
+                    border-radius: 12px;
+                  "
+                >
+                  <div class="card-body p-4">
+                    <div class="d-flex align-items-center mb-3">
+                      <i
+                        class="bi bi-lightning-charge-fill fs-4 me-2"
+                        style="color: #ffc107"
+                      ></i>
+                      <h5 class="mb-0 fw-bold" style="color: #00ff88">
+                        What We Do
+                      </h5>
+                    </div>
+                    <ul class="list-unstyled mb-0">
+                      <li class="mb-2 text-light">
+                        <i class="bi bi-check-circle-fill text-success me-2"></i
+                        >Web Security Scanning
+                      </li>
+                      <li class="mb-2 text-light">
+                        <i class="bi bi-check-circle-fill text-success me-2"></i
+                        >Vulnerability Detection
+                      </li>
+                      <li class="mb-2 text-light">
+                        <i class="bi bi-check-circle-fill text-success me-2"></i
+                        >Security Insights
+                      </li>
+                      <li class="mb-0 text-light">
+                        <i class="bi bi-check-circle-fill text-success me-2"></i
+                        >Risk Assessment
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div
+                  class="card"
+                  style="
+                    background: linear-gradient(
+                      135deg,
+                      rgba(0, 255, 136, 0.15),
+                      rgba(0, 204, 106, 0.1)
+                    );
+                    border: 2px solid rgba(0, 255, 136, 0.4);
+                    border-radius: 12px;
+                  "
+                >
+                  <div class="card-body p-4">
+                    <div class="d-flex align-items-center mb-4">
+                      <i
+                        class="bi bi-person-badge-fill fs-3 me-2"
+                        style="color: #ffc107"
+                      ></i>
+                      <h4 class="mb-0 fw-bold" style="color: #00ff88">
+                        Meet Our CEO
+                      </h4>
+                    </div>
+
+                    <div class="row align-items-center g-4">
+                      <div class="col-md-3 text-center">
+                        <img
+                          src="/developer/ceo-photo.jpg"
+                          alt="Awe Paul - CEO of Vulnexal"
+                          class="rounded-circle"
+                          style="
+                            width: 150px;
+                            height: 150px;
+                            object-fit: cover;
+                            border: 4px solid #00ff88;
+                            box-shadow: 0 0 30px rgba(0, 255, 136, 0.6);
+                          "
+                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                        />
+                        <div
+                          class="rounded-circle bg-success d-none align-items-center justify-content-center mx-auto"
+                          style="
+                            width: 150px;
+                            height: 150px;
+                            background: linear-gradient(
+                              135deg,
+                              #00ff88,
+                              #00cc6a
+                            ) !important;
+                            border: 4px solid #00ff88;
+                            box-shadow: 0 0 30px rgba(0, 255, 136, 0.6);
+                          "
+                        >
+                          <i
+                            class="bi bi-person-fill text-dark"
+                            style="font-size: 4rem"
+                          ></i>
+                        </div>
+                      </div>
+
+                      <div class="col-md-9">
+                        <h4
+                          class="fw-bold mb-1"
+                          style="color: #ffffff; font-size: 1.8rem"
+                        >
+                          Awe Paul
+                        </h4>
+                        <p
+                          class="mb-3"
+                          style="
+                            color: #00ff88;
+                            font-size: 1.1rem;
+                            font-weight: 600;
+                          "
+                        >
+                          <i class="bi bi-award-fill me-2"></i>CEO & Founder,
+                          Vulnexal
+                        </p>
+                        <p
+                          class="text-light mb-4"
+                          style="font-size: 1.05rem; line-height: 1.8"
+                        >
+                          <strong>Awe Paul</strong> is a cybersecurity
+                          enthusiast and full-stack developer specializing in
+                          application security and penetration testing. Driven
+                          by curiosity, technical expertise, and a passion for
+                          problem-solving, he created Vulnexal to help others
+                          detect vulnerabilities, secure web applications, and
+                          advance their cybersecurity skills. Under his
+                          leadership, Vulnexal is committed to innovation,
+                          practical solutions, and promoting safer digital
+                          environments.
+                        </p>
+
+                        <div class="d-flex gap-2 flex-wrap">
+                          <span
+                            class="badge px-3 py-2"
+                            style="
+                              background: rgba(255, 255, 255, 0.1);
+                              border: 1px solid #00ff88;
+                              color: #00ff88;
+                              font-size: 0.95rem;
+                            "
+                          >
+                            <i class="bi bi-shield-fill-check me-1"></i
+                            >Cybersecurity Expert
+                          </span>
+                          <span
+                            class="badge px-3 py-2"
+                            style="
+                              background: rgba(255, 255, 255, 0.1);
+                              border: 1px solid #00ff88;
+                              color: #00ff88;
+                              font-size: 0.95rem;
+                            "
+                          >
+                            <i class="bi bi-code-square me-1"></i>Full-Stack
+                            Developer
+                          </span>
+                          <span
+                            class="badge px-3 py-2"
+                            style="
+                              background: rgba(255, 255, 255, 0.1);
+                              border: 1px solid #00ff88;
+                              color: #00ff88;
+                              font-size: 0.95rem;
+                            "
+                          >
+                            <i class="bi bi-bug-fill me-1"></i>Penetration
+                            Testing
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="text-center mt-4 pt-3"
+              style="border-top: 1px solid rgba(0, 255, 136, 0.2)"
+            >
+              <p
+                class="text-light mb-0"
+                style="font-size: 0.95rem; opacity: 0.8"
+              >
+                <i class="bi bi-c-circle me-1"></i>2025 Vulnexal. All rights
+                reserved.
+              </p>
+              <p
+                class="mb-0 mt-1"
+                style="color: #00ff88; font-size: 0.9rem; font-style: italic"
+              >
+                <i class="bi bi-shield-check me-1"></i>Securing Digital
+                Environments, One Scan at a Time
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="modal-footer border-0 px-5 pb-4"
+            style="background: rgba(0, 255, 136, 0.05)"
+          >
+            <button
+              type="button"
+              class="btn fw-bold px-5 py-2"
+              data-bs-dismiss="modal"
+              style="
+                background: linear-gradient(135deg, #00ff88, #00cc6a);
+                color: #1e3c72;
+                border: none;
+                border-radius: 8px;
+                font-size: 1.05rem;
+              "
+            >
+              <i class="bi bi-x-circle me-2"></i>Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
       id="aboutModal"
       tabindex="-1"
       aria-labelledby="aboutModalLabel"
@@ -508,7 +906,14 @@
                 <i class="bi bi-star-fill text-warning me-2"></i>Brand
               </h6>
               <p class="text-light mb-0">
-                <strong>Cyber Genius</strong>
+                <strong
+                  style="
+                    font-family: 'Arial Black', sans-serif;
+                    letter-spacing: 1px;
+                    font-size: 1.2rem;
+                  "
+                  >Vulnexal</strong
+                >
               </p>
             </div>
 
@@ -808,7 +1213,7 @@
       }
 
       async function deleteScanRecord(scanId) {
-        const confirmed = await VulnexModal.confirm(
+        const confirmed = await VulnexalModal.confirm(
           "Are you sure you want to delete this scan? This action cannot be undone.",
           "Delete Scan"
         );
@@ -824,7 +1229,7 @@
               .collection("scans")
               .doc(scanId)
               .delete();
-            VulnexModal.success(
+            VulnexalModal.success(
               "Scan has been deleted successfully!",
               "Deleted",
               { autoClose: 2000 }
@@ -832,7 +1237,7 @@
             loadScanHistory();
           } catch (error) {
             console.error("Error deleting scan:", error);
-            VulnexModal.error(
+            VulnexalModal.error(
               "Failed to delete scan. Please try again.",
               "Error"
             );
@@ -859,7 +1264,7 @@
             const url = urlInput.value.trim();
 
             if (!url) {
-              VulnexModal.warning(
+              VulnexalModal.warning(
                 "Please enter a valid URL to scan",
                 "URL Required"
               );
@@ -868,7 +1273,7 @@
 
             const urlCheck = Validator.validateURL(url);
             if (!urlCheck.valid) {
-              VulnexModal.error(urlCheck.message, "Invalid URL");
+              VulnexalModal.error(urlCheck.message, "Invalid URL");
               Validator.showFieldError(urlInput, urlCheck.message);
               return;
             }
@@ -947,7 +1352,7 @@
               await loadScanHistory();
             } catch (error) {
               console.error("Scan error:", error);
-              VulnexModal.error(
+              VulnexalModal.error(
                 "Failed to scan website: " +
                   error.message +
                   ". Please check the URL and try again.",
@@ -957,6 +1362,18 @@
               if (overlay) overlay.classList.remove("active");
             }
           });
+
+          // Enable Enter key to trigger scan
+          const handleScanEnterKey = (event) => {
+            if (event.key === 'Enter' || event.keyCode === 13) {
+              event.preventDefault();
+              scanButton.click();
+            }
+          };
+          
+          if (urlInput) {
+            urlInput.addEventListener('keypress', handleScanEnterKey);
+          }
         }
       }
 
