@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="shortcut icon" href="favicon.svg" />
     <title>Vulnexal - Dashboard</title>
 
     <link
@@ -1365,14 +1367,14 @@
 
           // Enable Enter key to trigger scan
           const handleScanEnterKey = (event) => {
-            if (event.key === 'Enter' || event.keyCode === 13) {
+            if (event.key === "Enter" || event.keyCode === 13) {
               event.preventDefault();
               scanButton.click();
             }
           };
-          
+
           if (urlInput) {
-            urlInput.addEventListener('keypress', handleScanEnterKey);
+            urlInput.addEventListener("keypress", handleScanEnterKey);
           }
         }
       }
