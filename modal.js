@@ -1,7 +1,14 @@
 const VulnexalModal = {
-  create: (type, title, message, options = {}) => {
-    const existingModal = document.querySelector('.vulnexal-modal-overlay');
-    if (existingModal) existingModal.remove();
+  primaryCallback: null,
+  secondaryCallback: null,
+  
+  create: function(type, title, message, options) {
+    options = options || {};
+    
+    const existing = document.querySelector('.vulnexal-modal-overlay');
+    if (existing) {
+      existing.remove();
+    }
 
     const icons = {
       success: 'bi-check-circle-fill',
@@ -16,57 +23,54 @@ const VulnexalModal = {
     const modal = document.createElement('div');
     modal.className = 'vulnexal-modal';
     
-    const closeBtn = options.showClose !== false ? `
-      <button class="vulnexal-modal-close" onclick="VulnexalModal.close()">
-        <i class="bi bi-x"></i>
-      </button>
-    ` : '';
+    const closeBtn = options.showClose !== false 
+      ? '<button class="vulnexal-modal-close" onclick="VulnexalModal.close()"><i class="bi bi-x"></i></button>' 
+      : '';
     
-    const primaryBtnText = options.primaryBtnText || 'OK';
-    const secondaryBtnText = options.secondaryBtnText;
+    const primaryText = options.primaryBtnText || 'OK';
+    const secondaryText = options.secondaryBtnText;
     
-    const footerButtons = secondaryBtnText ? `
-      <button class="vulnexal-modal-btn vulnexal-modal-btn-secondary" onclick="VulnexalModal.onSecondary()">
-        ${secondaryBtnText}
-      </button>
-      <button class="vulnexal-modal-btn vulnexal-modal-btn-primary" onclick="VulnexalModal.onPrimary()">
-        ${primaryBtnText}
-      </button>
-    ` : `
-      <button class="vulnexal-modal-btn vulnexal-modal-btn-primary" onclick="VulnexalModal.close()">
-        ${primaryBtnText}
-      </button>
-    `;
+    let footerButtons = '';
+    if (secondaryText) {
+      footerButtons = '<button class="vulnexal-modal-btn vulnexal-modal-btn-secondary" onclick="VulnexalModal.onSecondary()">' + secondaryText + '</button>';
+      footerButtons += '<button class="vulnexal-modal-btn vulnexal-modal-btn-primary" onclick="VulnexalModal.onPrimary()">' + primaryText + '</button>';
+    } else {
+      footerButtons = '<button class="vulnexal-modal-btn vulnexal-modal-btn-primary" onclick="VulnexalModal.close()">' + primaryText + '</button>';
+    }
     
-    modal.innerHTML = `
-      ${closeBtn}
-      <div class="vulnexal-modal-header">
-        <div class="vulnexal-modal-icon ${type}">
-          <i class="bi ${icons[type]}"></i>
-        </div>
-        <h3 class="vulnexal-modal-title">${title}</h3>
-      </div>
-      <div class="vulnexal-modal-body">
-        <p class="vulnexal-modal-message">${message}</p>
-      </div>
-      <div class="vulnexal-modal-footer">
-        ${footerButtons}
-      </div>
-    `;
+    const iconClass = icons[type] || icons.info;
+    const safeTitle = this.escapeHtml(title);
+    const safeMessage = this.escapeHtml(message);
+    
+    modal.innerHTML = closeBtn +
+      '<div class="vulnexal-modal-header">' +
+        '<div class="vulnexal-modal-icon ' + type + '">' +
+          '<i class="bi ' + iconClass + '"></i>' +
+        '</div>' +
+        '<h3 class="vulnexal-modal-title">' + safeTitle + '</h3>' +
+      '</div>' +
+      '<div class="vulnexal-modal-body">' +
+        '<p class="vulnexal-modal-message">' + safeMessage + '</p>' +
+      '</div>' +
+      '<div class="vulnexal-modal-footer">' + footerButtons + '</div>';
     
     overlay.appendChild(modal);
     document.body.appendChild(overlay);
     
-    VulnexalModal.primaryCallback = options.onPrimary || (() => VulnexalModal.close());
-    VulnexalModal.secondaryCallback = options.onSecondary || (() => VulnexalModal.close());
+    this.primaryCallback = options.onPrimary || this.close.bind(this);
+    this.secondaryCallback = options.onSecondary || this.close.bind(this);
     
-    setTimeout(() => overlay.classList.add('active'), 10);
+    setTimeout(function() {
+      overlay.classList.add('active');
+    }, 10);
     
     if (options.autoClose) {
-      setTimeout(() => VulnexalModal.close(), options.autoClose);
+      setTimeout(function() {
+        VulnexalModal.close();
+      }, options.autoClose);
     }
     
-    overlay.addEventListener('click', (e) => {
+    overlay.addEventListener('click', function(e) {
       if (e.target === overlay && options.closeOnBackdrop !== false) {
         VulnexalModal.close();
       }
@@ -74,58 +78,84 @@ const VulnexalModal = {
     
     return overlay;
   },
+  
+  escapeHtml: function(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  },
 
-  close: () => {
+  close: function() {
     const overlay = document.querySelector('.vulnexal-modal-overlay');
     if (overlay) {
       overlay.classList.remove('active');
-      setTimeout(() => overlay.remove(), 300);
+      setTimeout(function() {
+        overlay.remove();
+      }, 300);
     }
   },
 
-  onPrimary: () => {
-    if (VulnexalModal.primaryCallback) {
-      VulnexalModal.primaryCallback();
+  onPrimary: function() {
+    if (this.primaryCallback) {
+      this.primaryCallback();
     }
   },
 
-  onSecondary: () => {
-    if (VulnexalModal.secondaryCallback) {
-      VulnexalModal.secondaryCallback();
+  onSecondary: function() {
+    if (this.secondaryCallback) {
+      this.secondaryCallback();
     }
   },
 
-  success: (message, title = 'Success!', options = {}) => {
-    return VulnexalModal.create('success', title, message, options);
+  success: function(message, title, options) {
+    title = title || 'Success!';
+    options = options || {};
+    return this.create('success', title, message, options);
   },
 
-  error: (message, title = 'Error!', options = {}) => {
-    return VulnexalModal.create('error', title, message, options);
+  error: function(message, title, options) {
+    title = title || 'Error!';
+    options = options || {};
+    return this.create('error', title, message, options);
   },
 
-  warning: (message, title = 'Warning!', options = {}) => {
-    return VulnexalModal.create('warning', title, message, options);
+  warning: function(message, title, options) {
+    title = title || 'Warning!';
+    options = options || {};
+    return this.create('warning', title, message, options);
   },
 
-  info: (message, title = 'Information', options = {}) => {
-    return VulnexalModal.create('info', title, message, options);
+  info: function(message, title, options) {
+    title = title || 'Information';
+    options = options || {};
+    return this.create('info', title, message, options);
   },
 
-  confirm: (message, title = 'Confirm', options = {}) => {
-    return new Promise((resolve) => {
-      VulnexalModal.create('warning', title, message, {
-        ...options,
+  confirm: function(message, title, options) {
+    title = title || 'Confirm';
+    options = options || {};
+    
+    return new Promise(function(resolve) {
+      const confirmOptions = {
         primaryBtnText: options.primaryBtnText || 'Confirm',
         secondaryBtnText: options.secondaryBtnText || 'Cancel',
-        onPrimary: () => {
+        onPrimary: function() {
           VulnexalModal.close();
           resolve(true);
         },
-        onSecondary: () => {
+        onSecondary: function() {
           VulnexalModal.close();
           resolve(false);
         }
-      });
+      };
+      
+      for (let key in options) {
+        if (key !== 'primaryBtnText' && key !== 'secondaryBtnText') {
+          confirmOptions[key] = options[key];
+        }
+      }
+      
+      VulnexalModal.create('warning', title, message, confirmOptions);
     });
   }
 };

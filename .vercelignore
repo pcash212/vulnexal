@@ -1,7 +1,0 @@
-# Vercel ignore file
-.git
-.gitignore
-README.md
-node_modules
-.DS_Store
-*.log

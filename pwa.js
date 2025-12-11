@@ -1,86 +1,66 @@
-// PWA Installation and Service Worker Registration
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker
-      .register('/service-worker.js')
-      .then((registration) => {
-        console.log('✅ Service Worker registered successfully:', registration.scope);
-        
-        // Check for updates periodically
-        setInterval(() => {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(function(registration) {
+        setInterval(function() {
           registration.update();
-        }, 60000); // Check every minute
+        }, 60000);
       })
-      .catch((error) => {
-        console.error('❌ Service Worker registration failed:', error);
+      .catch(function(error) {
+        console.error('Service Worker failed:', error);
       });
   });
 }
 
-// Install prompt handling
-let deferredPrompt;
-const installButton = document.getElementById('install-pwa-btn');
+var installPrompt = null;
+var installBtn = document.getElementById('install-pwa-btn');
 
-window.addEventListener('beforeinstallprompt', (e) => {
-  console.log('💾 PWA install prompt available');
+window.addEventListener('beforeinstallprompt', function(e) {
   e.preventDefault();
-  deferredPrompt = e;
+  installPrompt = e;
   
-  // Show install button if it exists
-  if (installButton) {
-    installButton.style.display = 'block';
+  if (installBtn) {
+    installBtn.style.display = 'block';
   }
 });
 
-// Handle install button click
-if (installButton) {
-  installButton.addEventListener('click', async () => {
-    if (!deferredPrompt) {
-      console.log('❌ Install prompt not available');
-      return;
-    }
+if (installBtn) {
+  installBtn.addEventListener('click', function() {
+    if (!installPrompt) return;
     
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    console.log(`👤 User response: ${outcome}`);
-    
-    deferredPrompt = null;
-    installButton.style.display = 'none';
+    installPrompt.prompt();
+    installPrompt.userChoice.then(function(choice) {
+      installPrompt = null;
+      installBtn.style.display = 'none';
+    });
   });
 }
 
-// Track install status
-window.addEventListener('appinstalled', () => {
-  console.log('✅ PWA installed successfully');
-  deferredPrompt = null;
+window.addEventListener('appinstalled', function() {
+  installPrompt = null;
 });
 
-// Online/Offline status
-window.addEventListener('online', () => {
-  console.log('🌐 Back online');
-  updateOnlineStatus(true);
-});
-
-window.addEventListener('offline', () => {
-  console.log('📴 Gone offline');
-  updateOnlineStatus(false);
-});
-
-function updateOnlineStatus(isOnline) {
-  const statusIndicator = document.getElementById('online-status');
-  if (statusIndicator) {
-    statusIndicator.textContent = isOnline ? '🌐 Online' : '📴 Offline';
-    statusIndicator.className = isOnline ? 'online' : 'offline';
+function updateStatus(online) {
+  var indicator = document.getElementById('online-status');
+  if (indicator) {
+    indicator.textContent = online ? 'Online' : 'Offline';
+    indicator.className = online ? 'online' : 'offline';
   }
 }
 
-// Check if running as PWA
-function isPWA() {
-  return window.matchMedia('(display-mode: standalone)').matches ||
+window.addEventListener('online', function() {
+  updateStatus(true);
+});
+
+window.addEventListener('offline', function() {
+  updateStatus(false);
+});
+
+function checkPWA() {
+  return window.matchMedia('(display-mode: standalone)').matches || 
          window.navigator.standalone === true;
 }
 
-if (isPWA()) {
-  console.log('🚀 Running as PWA');
+if (checkPWA()) {
   document.body.classList.add('pwa-mode');
 }

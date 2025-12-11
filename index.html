@@ -3,28 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#20c997" />
-    <meta
-      name="description"
-      content="Professional web vulnerability scanner and security testing tool"
-    />
+    <meta name="description" content="Professional web vulnerability scanner and security testing tool" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta
-      name="apple-mobile-web-app-status-bar-style"
-      content="black-translucent"
-    />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Vulnexal" />
-
-    <!-- Icons -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="shortcut icon" href="favicon.svg" />
     <link rel="apple-touch-icon" href="icon-192.svg" />
-
-    <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json" />
-
     <title>Vulnexal</title>
 
     <link
@@ -202,12 +189,8 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
     <script src="validation.js"></script>
-
     <script src="modal.js"></script>
-
-    <!-- PWA Script -->
     <script src="pwa.js"></script>
-
     <script>
       let retryCount = 0;
       const maxRetries = 50;
@@ -245,19 +228,17 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        // Enable Firebase Auth persistence for "Remember Me"
         auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-          .then(() => {
-            console.log('✅ Auth persistence enabled (LOCAL)');
+          .then(function() {
+            console.log('Auth persistence enabled');
           })
-          .catch((error) => {
-            console.error('❌ Auth persistence error:', error);
+          .catch(function(error) {
+            console.error('Persistence error:', error);
           });
 
-        // Check if user is already logged in
-        auth.onAuthStateChanged((user) => {
+        auth.onAuthStateChanged(function(user) {
           if (user && user.emailVerified) {
-            console.log('✅ User already logged in, redirecting to dashboard...');
+            console.log('User already logged in, redirecting...');
             window.location.href = "dashboard.html";
           }
         });
@@ -324,19 +305,22 @@
               return;
             }
 
-            rememberMe
-              ? localStorage.setItem("rememberedEmail", email)
-              : localStorage.removeItem("rememberedEmail");
+            if (rememberMe) {
+              localStorage.setItem("rememberedEmail", email);
+            } else {
+              localStorage.removeItem("rememberedEmail");
+            }
 
-            // Store user session info
-            const userInfo = {
-              uid: user.uid,
-              email: user.email,
-              emailVerified: user.emailVerified,
-              lastLogin: new Date().toISOString()
-            };
-            localStorage.setItem('vulnexal_user', JSON.stringify(userInfo));
-            console.log('✅ User session saved to localStorage');
+            try {
+              localStorage.setItem('vulnexal_session', JSON.stringify({
+                uid: user.uid,
+                email: user.email,
+                verified: user.emailVerified,
+                loginTime: new Date().toISOString()
+              }));
+            } catch (e) {
+              console.error('Session storage error:', e);
+            }
 
             if (elements.successText) {
               elements.successText.textContent =
@@ -406,7 +390,6 @@
             icon.classList.toggle("bi-eye-slash", isPassword);
           });
 
-        // Enable Enter key to submit form
         const emailInput = document.getElementById("login-email");
         const passwordInput = document.getElementById("login-password");
 

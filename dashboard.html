@@ -3,28 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#20c997" />
-    <meta
-      name="description"
-      content="Professional web vulnerability scanner and security testing tool"
-    />
+    <meta name="description" content="Professional web vulnerability scanner and security testing tool" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta
-      name="apple-mobile-web-app-status-bar-style"
-      content="black-translucent"
-    />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Vulnexal" />
-
-    <!-- Icons -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="shortcut icon" href="favicon.svg" />
     <link rel="apple-touch-icon" href="icon-192.svg" />
-
-    <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json" />
-
     <title>Vulnexal - Dashboard</title>
 
     <link
@@ -1055,12 +1042,8 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
     <script src="validation.js"></script>
-
     <script src="modal.js"></script>
-
-    <!-- PWA Script -->
     <script src="pwa.js"></script>
-
     <div id="process-loading-overlay" class="process-loading-overlay">
       <div class="process-loading-content">
         <div class="process-loading-logo">
@@ -1086,20 +1069,21 @@
       const auth = firebase.auth();
       const db = firebase.firestore();
 
-      // Enable Firebase Auth persistence (stay logged in)
       auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-        .then(() => {
-          console.log('✅ Auth persistence enabled (LOCAL)');
+        .then(function() {
+          console.log('Auth persistence enabled');
         })
-        .catch((error) => {
-          console.error('❌ Auth persistence error:', error);
+        .catch(function(error) {
+          console.error('Persistence error:', error);
         });
 
       const logout = () => {
-        // Clear local storage and session storage on logout
-        localStorage.removeItem('vulnexal_user');
-        sessionStorage.clear();
-        
+        try {
+          localStorage.removeItem('vulnexal_session');
+          localStorage.removeItem('rememberedEmail');
+        } catch(e) {
+          console.error('Storage clear error:', e);
+        }
         auth
           .signOut()
           .then(() => (window.location.href = "index.html"))
@@ -1401,7 +1385,6 @@
             }
           });
 
-          // Enable Enter key to trigger scan
           const handleScanEnterKey = (event) => {
             if (event.key === "Enter" || event.keyCode === 13) {
               event.preventDefault();
@@ -1636,25 +1619,48 @@
       window.addEventListener("load", function () {
         console.log("Dashboard page loaded, checking authentication...");
 
+        var checkAttempts = 0;
+        var maxAttempts = 30;
+
+        function checkAuth() {
+          checkAttempts++;
+          var currentUser = auth.currentUser;
+          
+          if (currentUser) {
+            console.log("User authenticated:", currentUser.email);
+            console.log("Loading dashboard data...");
+            
+            loadUserData(currentUser);
+            loadScanHistory();
+            setupScanFunctionality();
+            
+            console.log("Dashboard initialized successfully!");
+          } else if (checkAttempts < maxAttempts) {
+            setTimeout(checkAuth, 200);
+          } else {
+            console.log("No user logged in, redirecting...");
+            window.location.href = "index.html";
+          }
+        }
+
         auth.onAuthStateChanged(async (user) => {
           if (!user) {
-            console.log("No user logged in, redirecting to login...");
-            // Clear any stale data
-            localStorage.removeItem('vulnexal_user');
-            window.location.href = "index.html";
+            console.log("No Firebase user, checking session...");
+            var session = null;
+            try {
+              session = JSON.parse(localStorage.getItem('vulnexal_session'));
+            } catch(e) {}
+            
+            if (!session || !session.uid) {
+              console.log("No valid session, redirecting to login...");
+              window.location.href = "index.html";
+            } else {
+              console.log("Session found, waiting for Firebase...");
+              setTimeout(checkAuth, 500);
+            }
           } else {
             console.log("User authenticated:", user.email);
             console.log("Loading dashboard data...");
-
-            // Store user info in localStorage for quick access
-            const userInfo = {
-              uid: user.uid,
-              email: user.email,
-              emailVerified: user.emailVerified,
-              lastLogin: new Date().toISOString()
-            };
-            localStorage.setItem('vulnexal_user', JSON.stringify(userInfo));
-            console.log('✅ User data cached in localStorage');
 
             await loadUserData(user);
             loadScanHistory();

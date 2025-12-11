@@ -3,46 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- PWA Meta Tags -->
-    <meta name="theme-color" content="#20c997" />
-    <meta name="description" content="Professional web vulnerability scanner and security testing tool" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="Vulnexal" />
-    
-    <!-- Icons -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="shortcut icon" href="favicon.svg" />
-    <link rel="apple-touch-icon" href="icon-192.svg" />
-    
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="manifest.json" />
-    
     <title>Vulnerability Information - Vulnexal</title>
 
-    <!-- Bootstrap 5 CSS CDN -->
+    
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
       rel="stylesheet"
     />
 
-    <!-- Bootstrap Icons CDN -->
+    
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.0/font/bootstrap-icons.min.css"
       rel="stylesheet"
     />
 
-    <!-- Custom Styles -->
+    
     <link href="style.css" rel="stylesheet" />
   </head>
   <body>
     <div id="app">
-      <!-- Navigation Header -->
+      
       <header class="dashboard-header sticky-top">
         <nav class="navbar navbar-dark bg-dark px-3 px-md-4 py-2 py-md-3">
           <div class="container-fluid px-0">
-            <!-- Logo Section -->
+            
             <div class="d-flex align-items-center gap-2 flex-grow-1 min-w-0">
               <i class="bi bi-shield-check text-success fs-4"></i>
               <span
@@ -56,7 +42,7 @@
               >
             </div>
 
-            <!-- Right Section -->
+            
             <div class="d-flex align-items-center gap-2 gap-md-4">
               <a
                 href="dashboard.html"
@@ -73,7 +59,7 @@
 
       <main class="dashboard-main py-4">
         <div class="container-fluid px-4">
-          <!-- Page Title -->
+          
           <div class="mb-5 animate-fade-in">
             <h1 class="h3 fw-bold text-dark mb-1">
               <i class="bi bi-book text-success me-2"></i>Vulnerability
@@ -85,9 +71,9 @@
             </p>
           </div>
 
-          <!-- Vulnerabilities Accordion -->
+          
           <div class="accordion" id="vulnerabilitiesAccordion">
-            <!-- 1. HTTPS Validation -->
+            
             <div class="accordion-item bg-dark border-success mb-3">
               <h2 class="accordion-header" id="headingHTTPS">
                 <button
@@ -168,7 +154,7 @@
               </div>
             </div>
 
-            <!-- 2. Clickjacking Protection -->
+            
             <div class="accordion-item bg-dark border-success mb-3">
               <h2 class="accordion-header" id="headingClickjacking">
                 <button
@@ -246,7 +232,7 @@ Content-Security-Policy: frame-ancestors 'self';</code></pre>
               </div>
             </div>
 
-            <!-- 3. XSS (Cross-Site Scripting) -->
+            
             <div class="accordion-item bg-dark border-success mb-3">
               <h2 class="accordion-header" id="headingXSS">
                 <button
@@ -343,7 +329,7 @@ Content-Security-Policy: frame-ancestors 'self';</code></pre>
               </div>
             </div>
 
-            <!-- 4. Password Field Security -->
+            
             <div class="accordion-item bg-dark border-success mb-3">
               <h2 class="accordion-header" id="headingPassword">
                 <button
@@ -460,7 +446,7 @@ Content-Security-Policy: frame-ancestors 'self';</code></pre>
               </div>
             </div>
 
-            <!-- 5. Server Availability -->
+            
             <div class="accordion-item bg-dark border-success mb-3">
               <h2 class="accordion-header" id="headingAvailability">
                 <button
@@ -571,7 +557,7 @@ Content-Security-Policy: frame-ancestors 'self';</code></pre>
               </div>
             </div>
 
-            <!-- 6. Suspicious URL Patterns -->
+            
             <div class="accordion-item bg-dark border-success mb-3">
               <h2 class="accordion-header" id="headingURL">
                 <button
@@ -700,7 +686,7 @@ Content-Security-Policy: frame-ancestors 'self';</code></pre>
             </div>
           </div>
 
-          <!-- Additional Resources -->
+          
           <section class="mt-5 animate-slide-up">
             <div class="card bg-dark text-light border-success shadow-lg">
               <div class="card-body p-4">
@@ -792,10 +778,7 @@ Content-Security-Policy: frame-ancestors 'self';</code></pre>
       </main>
     </div>
 
-    <!-- Bootstrap 5 JS CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     
-    <!-- PWA Script -->
-    <script src="pwa.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

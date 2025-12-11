@@ -1,143 +1,131 @@
-  const ValidationRules = {
+const ValidationRules = {
   email: {
     pattern: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-    message: "Please enter a valid email address (e.g., user@example.com)",
-    test: (value) => ValidationRules.email.pattern.test(value)
+    message: "Enter a valid email address",
+    test: function(value) {
+      return this.pattern.test(value);
+    }
   },
-  
   password: {
     pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-    message: "Password must be at least 8 characters with uppercase, lowercase, number, and special character (@$!%*?&)",
-    test: (value) => ValidationRules.password.pattern.test(value)
+    message: "Password needs 8+ chars with upper, lower, number & special char",
+    test: function(value) {
+      return this.pattern.test(value);
+    }
   },
-  
   fullname: {
     pattern: /^[a-zA-Z\s'-]{2,50}$/,
-    message: "Full name must be 2-50 characters and contain only letters, spaces, hyphens, or apostrophes",
-    test: (value) => ValidationRules.fullname.pattern.test(value.trim())
+    message: "Name must be 2-50 characters",
+    test: function(value) {
+      return this.pattern.test(value.trim());
+    }
   },
-  
   username: {
     pattern: /^[a-zA-Z0-9_-]{3,20}$/,
-    message: "Username must be 3-20 characters and contain only letters, numbers, underscores, or hyphens",
-    test: (value) => ValidationRules.username.pattern.test(value.trim())
+    message: "Username must be 3-20 characters",
+    test: function(value) {
+      return this.pattern.test(value.trim());
+    }
   },
-  
   url: {
     pattern: /^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/,
-    message: "Please enter a valid URL (e.g., example.com or https://example.com)",
-    test: (value) => {
-      const val = value.trim();
-      return ValidationRules.url.pattern.test(val) || /^(https?:\/\/)/.test(val);
+    message: "Enter a valid URL",
+    test: function(value) {
+      const clean = value.trim();
+      return this.pattern.test(clean);
     }
   }
 };
 
 const Validator = {
-  validateField: (value, rule) => {
+  validateField: function(value, rule) {
     if (!value || value.trim() === '') {
-      return { valid: false, message: "This field is required" };
+      return { valid: false, message: "Required field" };
     }
-    
-    const valid = rule.test(value);
-    return { 
-      valid, 
-      message: valid ? "" : rule.message 
-    };
+    const isValid = rule.test(value);
+    return { valid: isValid, message: isValid ? "" : rule.message };
   },
   
-  validateEmail: (email) => Validator.validateField(email, ValidationRules.email),
+  validateEmail: function(email) {
+    return this.validateField(email, ValidationRules.email);
+  },
   
-  validatePassword: (password) => Validator.validateField(password, ValidationRules.password),
+  validatePassword: function(password) {
+    return this.validateField(password, ValidationRules.password);
+  },
   
-  validateFullname: (fullname) => Validator.validateField(fullname, ValidationRules.fullname),
+  validateFullname: function(fullname) {
+    return this.validateField(fullname, ValidationRules.fullname);
+  },
   
-  validateUsername: (username) => Validator.validateField(username, ValidationRules.username),
+  validateUsername: function(username) {
+    return this.validateField(username, ValidationRules.username);
+  },
   
-  validateURL: (url) => Validator.validateField(url, ValidationRules.url),
+  validateURL: function(url) {
+    return this.validateField(url, ValidationRules.url);
+  },
   
-  validatePasswordMatch: (password, confirmPassword) => {
+  validatePasswordMatch: function(password, confirmPassword) {
     if (!confirmPassword || confirmPassword.trim() === '') {
-      return { valid: false, message: "Please confirm your password" };
+      return { valid: false, message: "Confirm password required" };
     }
     if (password !== confirmPassword) {
-      return { valid: false, message: "Passwords do not match" };
+      return { valid: false, message: "Passwords don't match" };
     }
     return { valid: true, message: "" };
   },
   
-  showFieldError: (inputElement, message) => {
-    if (!inputElement) return;
+  showFieldError: function(input, message) {
+    if (!input) return;
+    input.classList.add('is-invalid');
+    input.classList.remove('is-valid');
     
-    inputElement.classList.add('is-invalid');
-    inputElement.classList.remove('is-valid');
-    
-    let errorDiv = inputElement.parentElement.querySelector('.invalid-feedback');
+    let errorDiv = input.parentElement.querySelector('.invalid-feedback');
     if (!errorDiv) {
       errorDiv = document.createElement('div');
       errorDiv.className = 'invalid-feedback d-block';
-      inputElement.parentElement.appendChild(errorDiv);
+      input.parentElement.appendChild(errorDiv);
     }
     errorDiv.textContent = message;
   },
   
-  showFieldSuccess: (inputElement) => {
-    if (!inputElement) return;
+  showFieldSuccess: function(input) {
+    if (!input) return;
+    input.classList.remove('is-invalid');
+    input.classList.add('is-valid');
     
-    inputElement.classList.remove('is-invalid');
-    inputElement.classList.add('is-valid');
-    
-    const errorDiv = inputElement.parentElement.querySelector('.invalid-feedback');
+    const errorDiv = input.parentElement.querySelector('.invalid-feedback');
     if (errorDiv) errorDiv.remove();
   },
   
-  clearFieldValidation: (inputElement) => {
-    if (!inputElement) return;
+  clearFieldValidation: function(input) {
+    if (!input) return;
+    input.classList.remove('is-invalid', 'is-valid');
     
-    inputElement.classList.remove('is-invalid', 'is-valid');
-    const errorDiv = inputElement.parentElement.querySelector('.invalid-feedback');
+    const errorDiv = input.parentElement.querySelector('.invalid-feedback');
     if (errorDiv) errorDiv.remove();
-  },
-  
-  validateForm: (fields) => {
-    let isValid = true;
-    const errors = {};
-    
-    for (const [fieldName, { element, validator }] of Object.entries(fields)) {
-      const value = element.value;
-      const result = validator(value);
-      
-      if (!result.valid) {
-        isValid = false;
-        errors[fieldName] = result.message;
-        Validator.showFieldError(element, result.message);
-      } else {
-        Validator.showFieldSuccess(element);
-      }
-    }
-    
-    return { valid: isValid, errors };
   }
 };
 
-const setupRealtimeValidation = (inputElement, validator) => {
-  if (!inputElement) return;
+function setupRealtimeValidation(input, validator) {
+  if (!input) return;
   
-  inputElement.addEventListener('blur', () => {
-    const result = validator(inputElement.value);
+  input.addEventListener('blur', function() {
+    const result = validator(input.value);
     if (!result.valid) {
-      Validator.showFieldError(inputElement, result.message);
+      Validator.showFieldError(input, result.message);
     } else {
-      Validator.showFieldSuccess(inputElement);
+      Validator.showFieldSuccess(input);
     }
   });
   
-  inputElement.addEventListener('input', () => {
-    if (inputElement.classList.contains('is-invalid')) {
-      const result = validator(inputElement.value);
+  input.addEventListener('input', function() {
+    if (input.classList.contains('is-invalid')) {
+      const result = validator(input.value);
       if (result.valid) {
-        Validator.showFieldSuccess(inputElement);
+        Validator.showFieldSuccess(input);
       }
     }
   });
-};
+}
