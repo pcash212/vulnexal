@@ -1064,8 +1064,8 @@
       const logout = () => {
         auth
           .signOut()
-          .then(() => (window.location.href = "login.html"))
-          .catch(() => (window.location.href = "login.html"));
+          .then(() => (window.location.href = "index.html"))
+          .catch(() => (window.location.href = "index.html"));
       };
 
       async function loadUserData(user) {
@@ -1601,7 +1601,7 @@
         auth.onAuthStateChanged(async (user) => {
           if (!user) {
             console.log("No user logged in, redirecting to login...");
-            window.location.href = "login.html";
+            window.location.href = "index.html";
           } else {
             console.log("User authenticated:", user.email);
             console.log("Loading dashboard data...");
