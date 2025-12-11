@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vulnex - Sign Up</title>
+
+    
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.0/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+
+    
+    <link href="style.css" rel="stylesheet" />
+  </head>
+  <body>
+    
+    <div id="app">
+      
+      <div id="signup-page" class="page-container active">
+        <header class="login-header">
+          <div
+            class="container-fluid h-100 d-flex align-items-center justify-content-between px-4"
+          >
+            <div class="logo-section d-flex align-items-center gap-2">
+              <i class="bi bi-shield-check text-success fs-3"></i>
+              <h1 class="h4 mb-0 text-dark fw-bold">
+                Vulnex
+              </h1>
+            </div>
+          </div>
+        </header>
+
+        <main class="login-main">
+          <div class="login-container">
+            
+            <div class="login-card card border-0 shadow-lg animate-fade-in">
+              <div class="card-body p-5 text-center">
+                
+                <div class="circular-logo-wrapper mb-4 animate-slide-up">
+                  <div class="circular-logo">
+                    <i class="bi bi-shield-check"></i>
+                  </div>
+                </div>
+                <h2 class="card-title h3 fw-bold mb-2">Create Account</h2>
+                <p class="text-muted mb-5">
+                  Join Vulnex today
+                </p>
+
+                
+              <div id="signupError" class="alert alert-danger d-none" role="alert">
+                <i class="bi bi-exclamation-triangle me-2"></i>
+                <span id="signupErrorText"></span>
+              </div>
+
+              
+              <div id="signupSuccess" class="alert alert-success d-none" role="alert">
+                <i class="bi bi-check-circle me-2"></i>
+                <span id="signupSuccessText"></span>
+              </div>
+
+              
+              <form id="signup-form" class="login-form">
+                
+                <div class="mb-4 text-start form-group-animated">
+                  <label for="signup-fullname" class="form-label fw-normal mb-2"
+                    >Full Name</label
+                  >
+                  <div class="input-group input-group-lg">
+                    <span class="input-group-text bg-white border-end-0">
+                      <i class="bi bi-person text-muted"></i>
+                    </span>
+                    <input
+                      type="text"
+                      class="form-control border-start-0 ps-0"
+                      id="signup-fullname"
+                      placeholder="Enter your full name"
+                      required
+                    />
+                  </div>
+                </div>
+
+                
+                <div class="mb-4 text-start form-group-animated">
+                  <label for="signup-email" class="form-label fw-normal mb-2"
+                    >Email Address</label
+                  >
+                  <div class="input-group input-group-lg">
+                    <span class="input-group-text bg-white border-end-0">
+                      <i class="bi bi-envelope text-muted"></i>
+                    </span>
+                    <input
+                      type="email"
+                      class="form-control border-start-0 ps-0"
+                      id="signup-email"
+                      placeholder="Enter your email"
+                      required
+                    />
+                  </div>
+                </div>
+
+                
+                <div class="mb-4 text-start form-group-animated">
+                  <label for="signup-username" class="form-label fw-500 mb-2"
+                    >Username</label
+                  >
+                  <div class="input-group input-group-lg">
+                    <span class="input-group-text bg-white border-end-0">
+                      <i class="bi bi-person-badge text-muted"></i>
+                    </span>
+                    <input
+                      type="text"
+                      class="form-control border-start-0 ps-0"
+                      id="signup-username"
+                      placeholder="Choose a username"
+                      required
+                    />
+                  </div>
+                </div>
+
+                
+                <div class="mb-4 text-start form-group-animated">
+                  <label for="signup-password" class="form-label fw-normal mb-2"
+                    >Password</label
+                  >
+                  <div class="input-group input-group-lg">
+                    <span class="input-group-text bg-white border-end-0">
+                      <i class="bi bi-lock text-muted"></i>
+                    </span>
+                    <input
+                      type="password"
+                      class="form-control border-start-0 ps-0"
+                      id="signup-password"
+                      placeholder="Create a strong password"
+                      required
+                    />
+                    <button
+                      class="btn btn-outline-secondary border-start-0"
+                      type="button"
+                      id="toggle-signup-password"
+                    >
+                      <i class="bi bi-eye"></i>
+                    </button>
+                  </div>
+                </div>
+
+                
+                <div class="mb-4 text-start form-group-animated">
+                  <label
+                    for="signup-confirm-password"
+                    class="form-label fw-normal mb-2"
+                    >Confirm Password</label
+                  >
+                  <div class="input-group input-group-lg">
+                    <span class="input-group-text bg-white border-end-0">
+                      <i class="bi bi-lock text-muted"></i>
+                    </span>
+                    <input
+                      type="password"
+                      class="form-control border-start-0 ps-0"
+                      id="signup-confirm-password"
+                      placeholder="Confirm your password"
+                      required
+                    />
+                    <button
+                      class="btn btn-outline-secondary border-start-0"
+                      type="button"
+                      id="toggle-signup-confirm-password"
+                    >
+                      <i class="bi bi-eye"></i>
+                    </button>
+                  </div>
+                </div>
+
+                
+                <div class="form-check mb-5 text-start">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="terms"
+                    required
+                  />
+                  <label
+                    class="form-check-label text-muted small"
+                    for="terms"
+                  >
+                    I agree to the
+                    <a href="#" class="text-success text-decoration-none"
+                      >Terms & Conditions</a
+                    >
+                  </label>
+                </div>
+
+                
+                <button
+                  type="submit"
+                  class="btn btn-success btn-lg w-100 fw-bold mb-4 btn-hover-lift"
+                >
+                  Create Account
+                </button>
+
+                
+                <p class="text-muted mb-0">
+                  Already have an account?
+                  <a
+                    href="login.html"
+                    class="text-success text-decoration-none fw-bold hover-underline"
+                  >
+                    Sign In
+                  </a>
+                </p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    
+    <div id="process-loading-overlay" class="process-loading-overlay">
+      <div class="process-loading-content">
+        <div class="process-loading-logo">
+          <i class="bi bi-shield-check"></i>
+        </div>
+        <div class="process-loading-text">Processing...</div>
+        <div class="process-loading-subtext">Please wait</div>
+      </div>
+    </div>
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    
+    <script src="validation.js"></script>
+    
+    
+    <script src="modal.js"></script>
+
+    <script>
+      let retryCount = 0;
+      const maxRetries = 50;
+      
+      function initializeApp() {
+        if (typeof firebase === 'undefined') {
+          retryCount++;
+          if (retryCount >= maxRetries) {
+            alert("Error: Firebase SDK failed to load. Please check your internet connection and refresh the page.");
+            return;
+          }
+          setTimeout(initializeApp, 100);
+          return;
+        }
+        
+        const firebaseConfig = {
+          apiKey: "AIzaSyBJ3XdoHatJhGOKFcnoAYMTqPGYW3Jymk4",
+          authDomain: "web-vulnerability-scanne-f066b.firebaseapp.com",
+          projectId: "web-vulnerability-scanne-f066b",
+          storageBucket: "web-vulnerability-scanne-f066b.appspot.com",
+          messagingSenderId: "875094369190",
+          appId: "1:875094369190:web:276df6ce835be8b3672567",
+          measurementId: "G-HFS9XCX60H"
+        };
+
+        let app;
+        try {
+          app = firebase.initializeApp(firebaseConfig);
+        } catch (error) {
+          app = firebase.app();
+        }
+        
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        
+        console.log("Firebase initialized successfully!");
+        const signupForm = document.getElementById("signup-form");
+        
+        if (!signupForm) return;
+        
+        setupRealtimeValidation(document.getElementById("signup-fullname"), Validator.validateFullname);
+        setupRealtimeValidation(document.getElementById("signup-email"), Validator.validateEmail);
+        setupRealtimeValidation(document.getElementById("signup-username"), Validator.validateUsername);
+        setupRealtimeValidation(document.getElementById("signup-password"), Validator.validatePassword);
+        
+        const confirmPasswordInput = document.getElementById("signup-confirm-password");
+        const passwordInput = document.getElementById("signup-password");
+        if (confirmPasswordInput && passwordInput) {
+          setupRealtimeValidation(confirmPasswordInput, (value) => 
+            Validator.validatePasswordMatch(passwordInput.value, value)
+          );
+        }
+        
+        signupForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          
+          const formData = {
+            fullname: document.getElementById("signup-fullname")?.value.trim(),
+            email: document.getElementById("signup-email")?.value.trim(),
+            username: document.getElementById("signup-username")?.value.trim(),
+            password: document.getElementById("signup-password")?.value.trim(),
+            confirmPassword: document.getElementById("signup-confirm-password")?.value.trim(),
+            terms: document.getElementById("terms")?.checked
+          };
+
+          const elements = {
+            error: document.getElementById("signupError"),
+            success: document.getElementById("signupSuccess"),
+            errorText: document.getElementById("signupErrorText"),
+            successText: document.getElementById("signupSuccessText"),
+            overlay: document.getElementById("process-loading-overlay")
+          };
+          
+          elements.error?.classList.add("d-none");
+          elements.success?.classList.add("d-none");
+
+          const validation = validateSignupForm(formData);
+          if (!validation.valid) {
+            showSignupError(elements, validation.message);
+            return;
+          }
+
+          elements.overlay?.classList.add("active");
+
+          try {
+            const userCredential = await auth.createUserWithEmailAndPassword(
+              formData.email, 
+              formData.password
+            );
+            
+            await db.collection("users").doc(userCredential.user.uid).set({
+              fullname: formData.fullname,
+              email: formData.email,
+              username: formData.username,
+              emailVerified: false,
+              createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            await userCredential.user.sendEmailVerification();
+            
+            elements.overlay?.classList.remove("active");
+            
+            console.log("✅ Verification email sent to:", formData.email);
+            console.log("⚠️ Check spam folder if you don't see the email");
+
+            if (elements.successText) {
+              elements.successText.innerHTML = `
+                <div style="text-align: center;">
+                  <h4 style="color: #20c997; margin-bottom: 15px;">🎉 Account Created Successfully!</h4>
+                  <div style="background-color: #fff3cd; border: 2px solid #ffc107; border-radius: 8px; padding: 20px; margin: 15px 0;">
+                    <i class="bi bi-envelope-check" style="font-size: 48px; color: #20c997;"></i>
+                    <h5 style="margin-top: 15px; color: #856404;">📧 Verification Email Sent!</h5>
+                    <p style="color: #856404; margin: 10px 0;">
+                      We've sent a verification link to:<br>
+                      <strong style="font-size: 16px;">${formData.email}</strong>
+                    </p>
+                    <hr style="border-color: #ffc107; margin: 15px 0;">
+                    <p style="color: #856404; font-weight: bold; margin: 10px 0;">
+                      ⚠️ IMPORTANT: You must click the verification link in your email before you can login!
+                    </p>
+                    <p style="color: #856404; font-size: 14px; margin: 5px 0;">
+                      Check your <strong>inbox</strong> and <strong>spam folder</strong>
+                    </p>
+                  </div>
+                  <p style="color: #6c757d; margin-top: 15px;">
+                    Redirecting to login page in 8 seconds...
+                  </p>
+                </div>
+              `;
+            }
+            elements.success?.classList.remove("d-none");
+            signupForm.reset();
+            
+            setTimeout(() => window.location.href = "login.html", 8000);
+
+          } catch (err) {
+            elements.overlay?.classList.remove("active");
+            
+            const errorMap = {
+              'auth/email-already-in-use': "Email already registered. Please login instead.",
+              'auth/weak-password': "Password is too weak. Please use a stronger password.",
+              'auth/invalid-email': "Invalid email address"
+            };
+            
+            showSignupError(elements, errorMap[err.code] || "Error creating account. Please try again.");
+          }
+        });
+        
+        function validateSignupForm(data) {
+          if (!data.fullname || !data.email || !data.username || !data.password || !data.confirmPassword) {
+            return { valid: false, message: "Please fill in all fields" };
+          }
+          
+          const fullnameCheck = Validator.validateFullname(data.fullname);
+          if (!fullnameCheck.valid) {
+            return { valid: false, message: fullnameCheck.message };
+          }
+          
+          const emailCheck = Validator.validateEmail(data.email);
+          if (!emailCheck.valid) {
+            return { valid: false, message: emailCheck.message };
+          }
+          
+          const usernameCheck = Validator.validateUsername(data.username);
+          if (!usernameCheck.valid) {
+            return { valid: false, message: usernameCheck.message };
+          }
+          
+          const passwordCheck = Validator.validatePassword(data.password);
+          if (!passwordCheck.valid) {
+            return { valid: false, message: passwordCheck.message };
+          }
+          
+          const passwordMatchCheck = Validator.validatePasswordMatch(data.password, data.confirmPassword);
+          if (!passwordMatchCheck.valid) {
+            return { valid: false, message: passwordMatchCheck.message };
+          }
+          
+          if (!data.terms) {
+            return { valid: false, message: "Please accept Terms & Conditions" };
+          }
+          
+          return { valid: true };
+        }
+        
+        function showSignupError(elements, message) {
+          if (elements.errorText) elements.errorText.textContent = message;
+          elements.error?.classList.remove("d-none");
+        }
+
+        const togglePassword = (inputId, btnId) => {
+          document.getElementById(btnId)?.addEventListener("click", function() {
+            const input = document.getElementById(inputId);
+            const icon = this.querySelector("i");
+            
+            if (!input || !icon) return;
+            
+            const isPassword = input.type === "password";
+            input.type = isPassword ? "text" : "password";
+            icon.classList.toggle("bi-eye", !isPassword);
+            icon.classList.toggle("bi-eye-slash", isPassword);
+          });
+        };
+        
+        togglePassword("signup-password", "toggle-signup-password");
+        togglePassword("signup-confirm-password", "toggle-signup-confirm-password");
+      }
+      
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeApp);
+      } else {
+        initializeApp();
+      }
+    </script>
+  </body>
+</html>
