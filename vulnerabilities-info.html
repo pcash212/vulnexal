@@ -3,8 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="shortcut icon" href="favicon.svg">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#20c997" />
+    <meta name="description" content="Professional web vulnerability scanner and security testing tool" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Vulnexal" />
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="shortcut icon" href="favicon.svg" />
+    <link rel="apple-touch-icon" href="icon-192.svg" />
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json" />
+    
     <title>Vulnerability Information - Vulnexal</title>
 
     <!-- Bootstrap 5 CSS CDN -->
@@ -33,7 +47,11 @@
               <i class="bi bi-shield-check text-success fs-4"></i>
               <span
                 class="navbar-brand mb-0 h6 h5-md text-success fw-bold text-truncate"
-                style="font-family: 'Arial Black', sans-serif; letter-spacing: 1px; text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);"
+                style="
+                  font-family: 'Arial Black', sans-serif;
+                  letter-spacing: 1px;
+                  text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+                "
                 >Vulnexal</span
               >
             </div>
@@ -58,16 +76,17 @@
           <!-- Page Title -->
           <div class="mb-5 animate-fade-in">
             <h1 class="h3 fw-bold text-dark mb-1">
-              <i class="bi bi-book text-success me-2"></i>Vulnerability Information
+              <i class="bi bi-book text-success me-2"></i>Vulnerability
+              Information
             </h1>
             <p class="text-muted">
-              Learn about common web vulnerabilities and how to protect against them
+              Learn about common web vulnerabilities and how to protect against
+              them
             </p>
           </div>
 
           <!-- Vulnerabilities Accordion -->
           <div class="accordion" id="vulnerabilitiesAccordion">
-            
             <!-- 1. HTTPS Validation -->
             <div class="accordion-item bg-dark border-success mb-3">
               <h2 class="accordion-header" id="headingHTTPS">
@@ -92,30 +111,54 @@
                 <div class="accordion-body bg-dark text-light">
                   <h5 class="text-success mb-3">What is HTTPS?</h5>
                   <p>
-                    HTTPS (HyperText Transfer Protocol Secure) is an encrypted version of HTTP. It uses SSL/TLS protocols to encrypt data transmitted between a user's browser and the web server.
+                    HTTPS (HyperText Transfer Protocol Secure) is an encrypted
+                    version of HTTP. It uses SSL/TLS protocols to encrypt data
+                    transmitted between a user's browser and the web server.
                   </p>
-                  
+
                   <h5 class="text-warning mt-4 mb-3">Why is it Important?</h5>
                   <ul>
-                    <li><strong>Data Encryption:</strong> Prevents eavesdropping and man-in-the-middle attacks</li>
-                    <li><strong>Data Integrity:</strong> Ensures data hasn't been tampered with during transmission</li>
-                    <li><strong>Authentication:</strong> Verifies that users are communicating with the intended website</li>
-                    <li><strong>SEO Benefits:</strong> Google prioritizes HTTPS sites in search rankings</li>
-                    <li><strong>User Trust:</strong> Browsers display security warnings for non-HTTPS sites</li>
+                    <li>
+                      <strong>Data Encryption:</strong> Prevents eavesdropping
+                      and man-in-the-middle attacks
+                    </li>
+                    <li>
+                      <strong>Data Integrity:</strong> Ensures data hasn't been
+                      tampered with during transmission
+                    </li>
+                    <li>
+                      <strong>Authentication:</strong> Verifies that users are
+                      communicating with the intended website
+                    </li>
+                    <li>
+                      <strong>SEO Benefits:</strong> Google prioritizes HTTPS
+                      sites in search rankings
+                    </li>
+                    <li>
+                      <strong>User Trust:</strong> Browsers display security
+                      warnings for non-HTTPS sites
+                    </li>
                   </ul>
 
-                  <h5 class="text-danger mt-4 mb-3">Risks of Not Using HTTPS:</h5>
+                  <h5 class="text-danger mt-4 mb-3">
+                    Risks of Not Using HTTPS:
+                  </h5>
                   <ul>
                     <li>Login credentials transmitted in plain text</li>
                     <li>Session cookies vulnerable to theft</li>
                     <li>Personal information exposed to attackers</li>
                     <li>Payment details can be intercepted</li>
-                    <li>Browser warnings deter users from visiting your site</li>
+                    <li>
+                      Browser warnings deter users from visiting your site
+                    </li>
                   </ul>
 
                   <h5 class="text-info mt-4 mb-3">How to Fix:</h5>
                   <ol>
-                    <li>Purchase an SSL/TLS certificate from a trusted Certificate Authority (CA)</li>
+                    <li>
+                      Purchase an SSL/TLS certificate from a trusted Certificate
+                      Authority (CA)
+                    </li>
                     <li>Install the certificate on your web server</li>
                     <li>Configure your server to use HTTPS</li>
                     <li>Redirect all HTTP traffic to HTTPS</li>
@@ -149,12 +192,20 @@
                 <div class="accordion-body bg-dark text-light">
                   <h5 class="text-success mb-3">What is Clickjacking?</h5>
                   <p>
-                    Clickjacking (also known as UI redressing) is an attack where a malicious website tricks users into clicking on something different from what they perceive. The attacker loads your website in an invisible iframe and overlays it with deceptive content.
+                    Clickjacking (also known as UI redressing) is an attack
+                    where a malicious website tricks users into clicking on
+                    something different from what they perceive. The attacker
+                    loads your website in an invisible iframe and overlays it
+                    with deceptive content.
                   </p>
-                  
+
                   <h5 class="text-warning mt-4 mb-3">How Does it Work?</h5>
                   <p>
-                    An attacker creates a malicious page that loads your website in a transparent iframe. They then position visible buttons or links over your site's interactive elements. When users think they're clicking on the attacker's content, they're actually interacting with your hidden website.
+                    An attacker creates a malicious page that loads your website
+                    in a transparent iframe. They then position visible buttons
+                    or links over your site's interactive elements. When users
+                    think they're clicking on the attacker's content, they're
+                    actually interacting with your hidden website.
                   </p>
 
                   <h5 class="text-danger mt-4 mb-3">Potential Consequences:</h5>
@@ -169,19 +220,25 @@
                   <h5 class="text-info mt-4 mb-3">How to Protect:</h5>
                   <div class="mb-3">
                     <strong>1. X-Frame-Options Header:</strong>
-                    <pre class="bg-secondary p-3 rounded mt-2"><code>X-Frame-Options: DENY
+                    <pre
+                      class="bg-secondary p-3 rounded mt-2"
+                    ><code>X-Frame-Options: DENY
 X-Frame-Options: SAMEORIGIN</code></pre>
                   </div>
-                  
+
                   <div class="mb-3">
                     <strong>2. Content Security Policy (CSP):</strong>
-                    <pre class="bg-secondary p-3 rounded mt-2"><code>Content-Security-Policy: frame-ancestors 'none';
+                    <pre
+                      class="bg-secondary p-3 rounded mt-2"
+                    ><code>Content-Security-Policy: frame-ancestors 'none';
 Content-Security-Policy: frame-ancestors 'self';</code></pre>
                   </div>
 
                   <div>
                     <strong>3. Frame-busting JavaScript:</strong>
-                    <pre class="bg-secondary p-3 rounded mt-2"><code>if (top !== self) {
+                    <pre
+                      class="bg-secondary p-3 rounded mt-2"
+                    ><code>if (top !== self) {
   top.location = self.location;
 }</code></pre>
                   </div>
@@ -200,7 +257,9 @@ Content-Security-Policy: frame-ancestors 'self';</code></pre>
                   aria-expanded="false"
                   aria-controls="collapseXSS"
                 >
-                  <i class="bi bi-exclamation-triangle-fill text-warning me-3 fs-5"></i>
+                  <i
+                    class="bi bi-exclamation-triangle-fill text-warning me-3 fs-5"
+                  ></i>
                   3. Cross-Site Scripting (XSS)
                 </button>
               </h2>
@@ -213,14 +272,28 @@ Content-Security-Policy: frame-ancestors 'self';</code></pre>
                 <div class="accordion-body bg-dark text-light">
                   <h5 class="text-success mb-3">What is XSS?</h5>
                   <p>
-                    Cross-Site Scripting (XSS) is a security vulnerability that allows attackers to inject malicious scripts into web pages viewed by other users. These scripts execute in the victim's browser with the same privileges as the legitimate website.
+                    Cross-Site Scripting (XSS) is a security vulnerability that
+                    allows attackers to inject malicious scripts into web pages
+                    viewed by other users. These scripts execute in the victim's
+                    browser with the same privileges as the legitimate website.
                   </p>
-                  
+
                   <h5 class="text-warning mt-4 mb-3">Types of XSS:</h5>
                   <ul>
-                    <li><strong>Stored XSS:</strong> Malicious script is permanently stored on the target server (e.g., in a database)</li>
-                    <li><strong>Reflected XSS:</strong> Script is reflected off the web server (e.g., in URL parameters or form submissions)</li>
-                    <li><strong>DOM-based XSS:</strong> Vulnerability exists in client-side code rather than server-side</li>
+                    <li>
+                      <strong>Stored XSS:</strong> Malicious script is
+                      permanently stored on the target server (e.g., in a
+                      database)
+                    </li>
+                    <li>
+                      <strong>Reflected XSS:</strong> Script is reflected off
+                      the web server (e.g., in URL parameters or form
+                      submissions)
+                    </li>
+                    <li>
+                      <strong>DOM-based XSS:</strong> Vulnerability exists in
+                      client-side code rather than server-side
+                    </li>
                   </ul>
 
                   <h5 class="text-danger mt-4 mb-3">Attack Scenarios:</h5>
@@ -235,17 +308,36 @@ Content-Security-Policy: frame-ancestors 'self';</code></pre>
 
                   <h5 class="text-info mt-4 mb-3">Prevention Methods:</h5>
                   <ol>
-                    <li><strong>Input Validation:</strong> Validate and sanitize all user inputs</li>
-                    <li><strong>Output Encoding:</strong> Encode data before rendering in HTML</li>
-                    <li><strong>Content Security Policy:</strong> Implement CSP headers to restrict script execution</li>
-                    <li><strong>HTTPOnly Cookies:</strong> Set HTTPOnly flag on cookies to prevent JavaScript access</li>
-                    <li><strong>Use Security Libraries:</strong> Utilize frameworks with built-in XSS protection</li>
-                    <li><strong>Avoid Dangerous Functions:</strong> Don't use eval(), innerHTML, or document.write() with user input</li>
+                    <li>
+                      <strong>Input Validation:</strong> Validate and sanitize
+                      all user inputs
+                    </li>
+                    <li>
+                      <strong>Output Encoding:</strong> Encode data before
+                      rendering in HTML
+                    </li>
+                    <li>
+                      <strong>Content Security Policy:</strong> Implement CSP
+                      headers to restrict script execution
+                    </li>
+                    <li>
+                      <strong>HTTPOnly Cookies:</strong> Set HTTPOnly flag on
+                      cookies to prevent JavaScript access
+                    </li>
+                    <li>
+                      <strong>Use Security Libraries:</strong> Utilize
+                      frameworks with built-in XSS protection
+                    </li>
+                    <li>
+                      <strong>Avoid Dangerous Functions:</strong> Don't use
+                      eval(), innerHTML, or document.write() with user input
+                    </li>
                   </ol>
 
                   <div class="alert alert-warning mt-3">
                     <i class="bi bi-lightbulb-fill me-2"></i>
-                    <strong>Best Practice:</strong> Always treat user input as untrusted and potentially malicious!
+                    <strong>Best Practice:</strong> Always treat user input as
+                    untrusted and potentially malicious!
                   </div>
                 </div>
               </div>
@@ -273,18 +365,39 @@ Content-Security-Policy: frame-ancestors 'self';</code></pre>
                 data-bs-parent="#vulnerabilitiesAccordion"
               >
                 <div class="accordion-body bg-dark text-light">
-                  <h5 class="text-success mb-3">What is Password Field Security?</h5>
+                  <h5 class="text-success mb-3">
+                    What is Password Field Security?
+                  </h5>
                   <p>
-                    Password field security refers to the measures taken to protect password input fields from being intercepted, stolen, or exposed during transmission and storage.
+                    Password field security refers to the measures taken to
+                    protect password input fields from being intercepted,
+                    stolen, or exposed during transmission and storage.
                   </p>
-                  
-                  <h5 class="text-warning mt-4 mb-3">Common Vulnerabilities:</h5>
+
+                  <h5 class="text-warning mt-4 mb-3">
+                    Common Vulnerabilities:
+                  </h5>
                   <ul>
-                    <li><strong>Unencrypted Transmission:</strong> Passwords sent over HTTP can be intercepted</li>
-                    <li><strong>Autocomplete Enabled:</strong> Browsers may save passwords in plain text</li>
-                    <li><strong>Weak Password Policies:</strong> Allowing simple, easily guessable passwords</li>
-                    <li><strong>Password Visible in Source:</strong> Pre-filled passwords in HTML</li>
-                    <li><strong>No Rate Limiting:</strong> Allowing unlimited login attempts</li>
+                    <li>
+                      <strong>Unencrypted Transmission:</strong> Passwords sent
+                      over HTTP can be intercepted
+                    </li>
+                    <li>
+                      <strong>Autocomplete Enabled:</strong> Browsers may save
+                      passwords in plain text
+                    </li>
+                    <li>
+                      <strong>Weak Password Policies:</strong> Allowing simple,
+                      easily guessable passwords
+                    </li>
+                    <li>
+                      <strong>Password Visible in Source:</strong> Pre-filled
+                      passwords in HTML
+                    </li>
+                    <li>
+                      <strong>No Rate Limiting:</strong> Allowing unlimited
+                      login attempts
+                    </li>
                   </ul>
 
                   <h5 class="text-danger mt-4 mb-3">Security Risks:</h5>
@@ -298,28 +411,50 @@ Content-Security-Policy: frame-ancestors 'self';</code></pre>
 
                   <h5 class="text-info mt-4 mb-3">Best Practices:</h5>
                   <ol>
-                    <li><strong>Always Use HTTPS:</strong> Encrypt password transmission with SSL/TLS</li>
-                    <li><strong>Password Field Attributes:</strong>
-                      <pre class="bg-secondary p-3 rounded mt-2"><code>&lt;input type="password" 
+                    <li>
+                      <strong>Always Use HTTPS:</strong> Encrypt password
+                      transmission with SSL/TLS
+                    </li>
+                    <li>
+                      <strong>Password Field Attributes:</strong>
+                      <pre
+                        class="bg-secondary p-3 rounded mt-2"
+                      ><code>&lt;input type="password" 
        autocomplete="new-password" 
        required /&gt;</code></pre>
                     </li>
-                    <li><strong>Implement Password Requirements:</strong>
+                    <li>
+                      <strong>Implement Password Requirements:</strong>
                       <ul class="mt-2">
                         <li>Minimum length (at least 8-12 characters)</li>
-                        <li>Mix of uppercase, lowercase, numbers, and symbols</li>
+                        <li>
+                          Mix of uppercase, lowercase, numbers, and symbols
+                        </li>
                         <li>Check against common password lists</li>
                       </ul>
                     </li>
-                    <li><strong>Hash Passwords:</strong> Never store passwords in plain text (use bcrypt, Argon2, or PBKDF2)</li>
-                    <li><strong>Rate Limiting:</strong> Limit login attempts to prevent brute force</li>
-                    <li><strong>Multi-Factor Authentication:</strong> Add an extra layer of security</li>
-                    <li><strong>Password Strength Indicator:</strong> Help users create strong passwords</li>
+                    <li>
+                      <strong>Hash Passwords:</strong> Never store passwords in
+                      plain text (use bcrypt, Argon2, or PBKDF2)
+                    </li>
+                    <li>
+                      <strong>Rate Limiting:</strong> Limit login attempts to
+                      prevent brute force
+                    </li>
+                    <li>
+                      <strong>Multi-Factor Authentication:</strong> Add an extra
+                      layer of security
+                    </li>
+                    <li>
+                      <strong>Password Strength Indicator:</strong> Help users
+                      create strong passwords
+                    </li>
                   </ol>
 
                   <div class="alert alert-danger mt-3">
                     <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                    <strong>Critical:</strong> Never transmit passwords over HTTP or store them in plain text!
+                    <strong>Critical:</strong> Never transmit passwords over
+                    HTTP or store them in plain text!
                   </div>
                 </div>
               </div>
@@ -347,18 +482,39 @@ Content-Security-Policy: frame-ancestors 'self';</code></pre>
                 data-bs-parent="#vulnerabilitiesAccordion"
               >
                 <div class="accordion-body bg-dark text-light">
-                  <h5 class="text-success mb-3">What is Server Availability?</h5>
+                  <h5 class="text-success mb-3">
+                    What is Server Availability?
+                  </h5>
                   <p>
-                    Server availability refers to the ability of a web server to respond to requests and serve content to users. High availability is crucial for maintaining user trust and business continuity.
+                    Server availability refers to the ability of a web server to
+                    respond to requests and serve content to users. High
+                    availability is crucial for maintaining user trust and
+                    business continuity.
                   </p>
-                  
-                  <h5 class="text-warning mt-4 mb-3">Common Availability Issues:</h5>
+
+                  <h5 class="text-warning mt-4 mb-3">
+                    Common Availability Issues:
+                  </h5>
                   <ul>
-                    <li><strong>DDoS Attacks:</strong> Overwhelming server with traffic</li>
-                    <li><strong>Server Crashes:</strong> Software bugs or hardware failures</li>
-                    <li><strong>Network Issues:</strong> DNS problems, routing issues</li>
-                    <li><strong>Resource Exhaustion:</strong> CPU, memory, or bandwidth limits reached</li>
-                    <li><strong>Maintenance Windows:</strong> Planned downtime</li>
+                    <li>
+                      <strong>DDoS Attacks:</strong> Overwhelming server with
+                      traffic
+                    </li>
+                    <li>
+                      <strong>Server Crashes:</strong> Software bugs or hardware
+                      failures
+                    </li>
+                    <li>
+                      <strong>Network Issues:</strong> DNS problems, routing
+                      issues
+                    </li>
+                    <li>
+                      <strong>Resource Exhaustion:</strong> CPU, memory, or
+                      bandwidth limits reached
+                    </li>
+                    <li>
+                      <strong>Maintenance Windows:</strong> Planned downtime
+                    </li>
                   </ul>
 
                   <h5 class="text-danger mt-4 mb-3">Impact of Downtime:</h5>
@@ -372,19 +528,44 @@ Content-Security-Policy: frame-ancestors 'self';</code></pre>
 
                   <h5 class="text-info mt-4 mb-3">Improving Availability:</h5>
                   <ol>
-                    <li><strong>Load Balancing:</strong> Distribute traffic across multiple servers</li>
-                    <li><strong>Redundancy:</strong> Use backup servers and failover systems</li>
-                    <li><strong>CDN (Content Delivery Network):</strong> Cache content closer to users</li>
-                    <li><strong>DDoS Protection:</strong> Use services like Cloudflare or AWS Shield</li>
-                    <li><strong>Monitoring & Alerts:</strong> Implement uptime monitoring (e.g., Pingdom, UptimeRobot)</li>
-                    <li><strong>Auto-scaling:</strong> Automatically increase resources during traffic spikes</li>
-                    <li><strong>Regular Backups:</strong> Maintain recent backups for quick recovery</li>
-                    <li><strong>Health Checks:</strong> Automatically detect and replace unhealthy servers</li>
+                    <li>
+                      <strong>Load Balancing:</strong> Distribute traffic across
+                      multiple servers
+                    </li>
+                    <li>
+                      <strong>Redundancy:</strong> Use backup servers and
+                      failover systems
+                    </li>
+                    <li>
+                      <strong>CDN (Content Delivery Network):</strong> Cache
+                      content closer to users
+                    </li>
+                    <li>
+                      <strong>DDoS Protection:</strong> Use services like
+                      Cloudflare or AWS Shield
+                    </li>
+                    <li>
+                      <strong>Monitoring & Alerts:</strong> Implement uptime
+                      monitoring (e.g., Pingdom, UptimeRobot)
+                    </li>
+                    <li>
+                      <strong>Auto-scaling:</strong> Automatically increase
+                      resources during traffic spikes
+                    </li>
+                    <li>
+                      <strong>Regular Backups:</strong> Maintain recent backups
+                      for quick recovery
+                    </li>
+                    <li>
+                      <strong>Health Checks:</strong> Automatically detect and
+                      replace unhealthy servers
+                    </li>
                   </ol>
 
                   <div class="alert alert-info mt-3">
                     <i class="bi bi-graph-up me-2"></i>
-                    <strong>Target:</strong> Industry standard is 99.9% uptime (less than 9 hours downtime per year)
+                    <strong>Target:</strong> Industry standard is 99.9% uptime
+                    (less than 9 hours downtime per year)
                   </div>
                 </div>
               </div>
@@ -412,19 +593,45 @@ Content-Security-Policy: frame-ancestors 'self';</code></pre>
                 data-bs-parent="#vulnerabilitiesAccordion"
               >
                 <div class="accordion-body bg-dark text-light">
-                  <h5 class="text-success mb-3">What are Suspicious URL Patterns?</h5>
+                  <h5 class="text-success mb-3">
+                    What are Suspicious URL Patterns?
+                  </h5>
                   <p>
-                    Suspicious URL patterns are specific characteristics or structures in URLs that may indicate malicious intent, phishing attempts, or security vulnerabilities. These patterns are often used by attackers to deceive users or exploit security weaknesses.
+                    Suspicious URL patterns are specific characteristics or
+                    structures in URLs that may indicate malicious intent,
+                    phishing attempts, or security vulnerabilities. These
+                    patterns are often used by attackers to deceive users or
+                    exploit security weaknesses.
                   </p>
-                  
-                  <h5 class="text-warning mt-4 mb-3">Common Suspicious Patterns:</h5>
+
+                  <h5 class="text-warning mt-4 mb-3">
+                    Common Suspicious Patterns:
+                  </h5>
                   <ul>
-                    <li><strong>Embedded Scripts:</strong> URLs containing &lt;script&gt;, javascript:, or data: protocols</li>
-                    <li><strong>SQL Injection Patterns:</strong> UNION SELECT, OR 1=1, DROP TABLE</li>
-                    <li><strong>Path Traversal:</strong> ../, ..\, attempts to access parent directories</li>
-                    <li><strong>Command Injection:</strong> Semicolons, pipes, backticks, system commands</li>
-                    <li><strong>Encoded Payloads:</strong> Excessive URL encoding (%20, %3C, %3E) to hide malicious content</li>
-                    <li><strong>Phishing Indicators:</strong> Typosquatting, homograph attacks, misleading subdomains</li>
+                    <li>
+                      <strong>Embedded Scripts:</strong> URLs containing
+                      &lt;script&gt;, javascript:, or data: protocols
+                    </li>
+                    <li>
+                      <strong>SQL Injection Patterns:</strong> UNION SELECT, OR
+                      1=1, DROP TABLE
+                    </li>
+                    <li>
+                      <strong>Path Traversal:</strong> ../, ..\, attempts to
+                      access parent directories
+                    </li>
+                    <li>
+                      <strong>Command Injection:</strong> Semicolons, pipes,
+                      backticks, system commands
+                    </li>
+                    <li>
+                      <strong>Encoded Payloads:</strong> Excessive URL encoding
+                      (%20, %3C, %3E) to hide malicious content
+                    </li>
+                    <li>
+                      <strong>Phishing Indicators:</strong> Typosquatting,
+                      homograph attacks, misleading subdomains
+                    </li>
                   </ul>
 
                   <h5 class="text-danger mt-4 mb-3">Security Risks:</h5>
@@ -439,19 +646,42 @@ Content-Security-Policy: frame-ancestors 'self';</code></pre>
 
                   <h5 class="text-info mt-4 mb-3">Detection & Prevention:</h5>
                   <ol>
-                    <li><strong>URL Validation:</strong> Check against known malicious patterns</li>
-                    <li><strong>Input Sanitization:</strong> Remove or escape special characters</li>
-                    <li><strong>Whitelist Approach:</strong> Only allow known-good URL structures</li>
-                    <li><strong>URL Encoding:</strong> Properly encode user-generated URLs</li>
-                    <li><strong>Web Application Firewall (WAF):</strong> Filter malicious requests</li>
-                    <li><strong>Regular Expression Filtering:</strong> Block dangerous patterns</li>
+                    <li>
+                      <strong>URL Validation:</strong> Check against known
+                      malicious patterns
+                    </li>
+                    <li>
+                      <strong>Input Sanitization:</strong> Remove or escape
+                      special characters
+                    </li>
+                    <li>
+                      <strong>Whitelist Approach:</strong> Only allow known-good
+                      URL structures
+                    </li>
+                    <li>
+                      <strong>URL Encoding:</strong> Properly encode
+                      user-generated URLs
+                    </li>
+                    <li>
+                      <strong>Web Application Firewall (WAF):</strong> Filter
+                      malicious requests
+                    </li>
+                    <li>
+                      <strong>Regular Expression Filtering:</strong> Block
+                      dangerous patterns
+                    </li>
                     <li><strong>DNSSEC:</strong> Prevent DNS spoofing</li>
-                    <li><strong>User Education:</strong> Train users to recognize suspicious URLs</li>
+                    <li>
+                      <strong>User Education:</strong> Train users to recognize
+                      suspicious URLs
+                    </li>
                   </ol>
 
                   <div class="bg-secondary p-3 rounded mt-3">
                     <strong>Examples of Suspicious URLs:</strong>
-                    <pre class="mb-0 text-light"><code>❌ http://example.com/&lt;script&gt;alert('XSS')&lt;/script&gt;
+                    <pre
+                      class="mb-0 text-light"
+                    ><code>❌ http://example.com/&lt;script&gt;alert('XSS')&lt;/script&gt;
 ❌ http://example.com/user?id=1' OR '1'='1
 ❌ http://example.com/files/../../../../etc/passwd
 ❌ http://paypa1.com (typosquatting)
@@ -462,12 +692,12 @@ Content-Security-Policy: frame-ancestors 'self';</code></pre>
 
                   <div class="alert alert-warning mt-3">
                     <i class="bi bi-shield-exclamation me-2"></i>
-                    <strong>Pro Tip:</strong> Always validate and sanitize URL parameters before processing!
+                    <strong>Pro Tip:</strong> Always validate and sanitize URL
+                    parameters before processing!
                   </div>
                 </div>
               </div>
             </div>
-
           </div>
 
           <!-- Additional Resources -->
@@ -482,16 +712,37 @@ Content-Security-Policy: frame-ancestors 'self';</code></pre>
                     <h6 class="text-info">Security Organizations:</h6>
                     <ul class="list-unstyled">
                       <li class="mb-2">
-                        <i class="bi bi-arrow-right-circle text-success me-2"></i>
-                        <a href="https://owasp.org/" target="_blank" class="text-light">OWASP (Open Web Application Security Project)</a>
+                        <i
+                          class="bi bi-arrow-right-circle text-success me-2"
+                        ></i>
+                        <a
+                          href="https://owasp.org/"
+                          target="_blank"
+                          class="text-light"
+                          >OWASP (Open Web Application Security Project)</a
+                        >
                       </li>
                       <li class="mb-2">
-                        <i class="bi bi-arrow-right-circle text-success me-2"></i>
-                        <a href="https://cwe.mitre.org/" target="_blank" class="text-light">CWE (Common Weakness Enumeration)</a>
+                        <i
+                          class="bi bi-arrow-right-circle text-success me-2"
+                        ></i>
+                        <a
+                          href="https://cwe.mitre.org/"
+                          target="_blank"
+                          class="text-light"
+                          >CWE (Common Weakness Enumeration)</a
+                        >
                       </li>
                       <li class="mb-2">
-                        <i class="bi bi-arrow-right-circle text-success me-2"></i>
-                        <a href="https://nvd.nist.gov/" target="_blank" class="text-light">NVD (National Vulnerability Database)</a>
+                        <i
+                          class="bi bi-arrow-right-circle text-success me-2"
+                        ></i>
+                        <a
+                          href="https://nvd.nist.gov/"
+                          target="_blank"
+                          class="text-light"
+                          >NVD (National Vulnerability Database)</a
+                        >
                       </li>
                     </ul>
                   </div>
@@ -499,16 +750,37 @@ Content-Security-Policy: frame-ancestors 'self';</code></pre>
                     <h6 class="text-info">Learning Resources:</h6>
                     <ul class="list-unstyled">
                       <li class="mb-2">
-                        <i class="bi bi-arrow-right-circle text-success me-2"></i>
-                        <a href="https://portswigger.net/web-security" target="_blank" class="text-light">PortSwigger Web Security Academy</a>
+                        <i
+                          class="bi bi-arrow-right-circle text-success me-2"
+                        ></i>
+                        <a
+                          href="https://portswigger.net/web-security"
+                          target="_blank"
+                          class="text-light"
+                          >PortSwigger Web Security Academy</a
+                        >
                       </li>
                       <li class="mb-2">
-                        <i class="bi bi-arrow-right-circle text-success me-2"></i>
-                        <a href="https://www.hacksplaining.com/" target="_blank" class="text-light">Hacksplaining Security Tutorials</a>
+                        <i
+                          class="bi bi-arrow-right-circle text-success me-2"
+                        ></i>
+                        <a
+                          href="https://www.hacksplaining.com/"
+                          target="_blank"
+                          class="text-light"
+                          >Hacksplaining Security Tutorials</a
+                        >
                       </li>
                       <li class="mb-2">
-                        <i class="bi bi-arrow-right-circle text-success me-2"></i>
-                        <a href="https://cheatsheetseries.owasp.org/" target="_blank" class="text-light">OWASP Cheat Sheet Series</a>
+                        <i
+                          class="bi bi-arrow-right-circle text-success me-2"
+                        ></i>
+                        <a
+                          href="https://cheatsheetseries.owasp.org/"
+                          target="_blank"
+                          class="text-light"
+                          >OWASP Cheat Sheet Series</a
+                        >
                       </li>
                     </ul>
                   </div>
@@ -516,12 +788,14 @@ Content-Security-Policy: frame-ancestors 'self';</code></pre>
               </div>
             </div>
           </section>
-
         </div>
       </main>
     </div>
 
     <!-- Bootstrap 5 JS CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- PWA Script -->
+    <script src="pwa.js"></script>
   </body>
 </html>

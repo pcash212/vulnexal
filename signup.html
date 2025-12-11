@@ -3,8 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#20c997" />
+    <meta name="description" content="Professional web vulnerability scanner and security testing tool" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Vulnexal" />
+    
+    <!-- Icons -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="shortcut icon" href="favicon.svg">
+    <link rel="apple-touch-icon" href="icon-192.svg" />
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json" />
+    
     <title>Vulnexal - Sign Up</title>
 
     
@@ -249,6 +263,9 @@
     
     
     <script src="modal.js"></script>
+    
+    <!-- PWA Script -->
+    <script src="pwa.js"></script>
 
     <script>
       let retryCount = 0;

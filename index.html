@@ -3,29 +3,44 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="shortcut icon" href="favicon.svg">
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#20c997" />
+    <meta
+      name="description"
+      content="Professional web vulnerability scanner and security testing tool"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="Vulnexal" />
+
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="shortcut icon" href="favicon.svg" />
+    <link rel="apple-touch-icon" href="icon-192.svg" />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json" />
+
     <title>Vulnexal</title>
 
-    
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
       rel="stylesheet"
     />
 
-    
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.0/font/bootstrap-icons.min.css"
       rel="stylesheet"
     />
 
-    
     <link href="style.css" rel="stylesheet" />
   </head>
   <body>
-    
     <div id="app">
-      
       <div id="login-page" class="page-container active">
         <header class="login-header">
           <div
@@ -33,7 +48,13 @@
           >
             <div class="logo-section d-flex align-items-center gap-2">
               <i class="bi bi-shield-check text-success fs-3"></i>
-              <h1 class="h4 mb-0 text-dark fw-bold" style="font-family: 'Arial Black', sans-serif; letter-spacing: 1px;">
+              <h1
+                class="h4 mb-0 text-dark fw-bold"
+                style="
+                  font-family: 'Arial Black', sans-serif;
+                  letter-spacing: 1px;
+                "
+              >
                 Vulnexal
               </h1>
             </div>
@@ -42,22 +63,16 @@
 
         <main class="login-main">
           <div class="login-container">
-            
             <div class="login-card card border-0 shadow-lg animate-fade-in">
-              
               <div class="card-body p-5 text-center">
-                
                 <div class="circular-logo-wrapper mb-4 animate-slide-up">
                   <div class="circular-logo">
                     <i class="bi bi-shield-check"></i>
                   </div>
                 </div>
-                <h2 class="card-title h3 fw-bold mb-2">
-                  Vulnexal
-                </h2>
+                <h2 class="card-title h3 fw-bold mb-2">Vulnexal</h2>
                 <p class="text-muted mb-5">Sign in to your account</p>
 
-                
                 <div
                   id="loginError"
                   class="alert alert-danger d-none"
@@ -67,7 +82,6 @@
                   <span id="loginErrorText"></span>
                 </div>
 
-                
                 <div
                   id="loginSuccess"
                   class="alert alert-success d-none"
@@ -77,12 +91,7 @@
                   <span id="loginSuccessText"></span>
                 </div>
 
-                
-                <form
-                  id="login-form"
-                  class="login-form"
-                >
-                  
+                <form id="login-form" class="login-form">
                   <div class="mb-4 text-start form-group-animated">
                     <label for="login-email" class="form-label fw-normal mb-2"
                       >Email Address</label
@@ -101,7 +110,6 @@
                     </div>
                   </div>
 
-                  
                   <div class="mb-4 text-start form-group-animated">
                     <label
                       for="login-password"
@@ -129,7 +137,6 @@
                     </div>
                   </div>
 
-                  
                   <div
                     class="d-flex justify-content-between align-items-center mb-5"
                   >
@@ -154,7 +161,6 @@
                     </a>
                   </div>
 
-                  
                   <button
                     type="submit"
                     class="btn btn-success btn-lg w-100 fw-bold mb-4 btn-hover-lift"
@@ -162,7 +168,6 @@
                     Sign In
                   </button>
 
-                  
                   <p class="text-muted mb-0">
                     Don't have an account?
                     <a
@@ -180,7 +185,6 @@
       </div>
     </div>
 
-    
     <div id="process-loading-overlay" class="process-loading-overlay">
       <div class="process-loading-content">
         <div class="process-loading-logo">
@@ -191,35 +195,36 @@
       </div>
     </div>
 
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
-    
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
-    
     <script src="validation.js"></script>
-    
-    
+
     <script src="modal.js"></script>
+
+    <!-- PWA Script -->
+    <script src="pwa.js"></script>
 
     <script>
       let retryCount = 0;
       const maxRetries = 50;
-      
+
       function initializeApp() {
-        if (typeof firebase === 'undefined') {
+        if (typeof firebase === "undefined") {
           retryCount++;
           if (retryCount >= maxRetries) {
-            alert("Error: Firebase SDK failed to load. Please check your internet connection and refresh the page.");
+            alert(
+              "Error: Firebase SDK failed to load. Please check your internet connection and refresh the page."
+            );
             return;
           }
           setTimeout(initializeApp, 100);
           return;
         }
-        
+
         const firebaseConfig = {
           apiKey: "AIzaSyBJ3XdoHatJhGOKFcnoAYMTqPGYW3Jymk4",
           authDomain: "web-vulnerability-scanne-f066b.firebaseapp.com",
@@ -227,7 +232,7 @@
           storageBucket: "web-vulnerability-scanne-f066b.appspot.com",
           messagingSenderId: "875094369190",
           appId: "1:875094369190:web:276df6ce835be8b3672567",
-          measurementId: "G-HFS9XCX60H"
+          measurementId: "G-HFS9XCX60H",
         };
 
         let app;
@@ -236,39 +241,44 @@
         } catch (error) {
           app = firebase.app();
         }
-        
+
         const auth = firebase.auth();
         const db = firebase.firestore();
-        
+
         const loginForm = document.getElementById("login-form");
-        
+
         if (!loginForm) return;
-        
-        setupRealtimeValidation(document.getElementById("login-email"), Validator.validateEmail);
-        
+
+        setupRealtimeValidation(
+          document.getElementById("login-email"),
+          Validator.validateEmail
+        );
+
         loginForm.addEventListener("submit", async (e) => {
           e.preventDefault();
-          
+
           const email = document.getElementById("login-email")?.value.trim();
-          const password = document.getElementById("login-password")?.value.trim();
+          const password = document
+            .getElementById("login-password")
+            ?.value.trim();
           const rememberMe = document.getElementById("remember-me")?.checked;
-          
+
           const elements = {
             error: document.getElementById("loginError"),
             success: document.getElementById("loginSuccess"),
             errorText: document.getElementById("loginErrorText"),
             successText: document.getElementById("loginSuccessText"),
-            overlay: document.getElementById("process-loading-overlay")
+            overlay: document.getElementById("process-loading-overlay"),
           };
-          
+
           elements.error?.classList.add("d-none");
           elements.success?.classList.add("d-none");
-          
+
           if (!email || !password) {
             showError(elements, "Please enter email and password");
             return;
           }
-          
+
           const emailCheck = Validator.validateEmail(email);
           if (!emailCheck.valid) {
             showError(elements, emailCheck.message);
@@ -276,91 +286,105 @@
           }
 
           elements.overlay?.classList.add("active");
-          
+
           try {
-            const userCredential = await auth.signInWithEmailAndPassword(email, password);
+            const userCredential = await auth.signInWithEmailAndPassword(
+              email,
+              password
+            );
             const user = userCredential.user;
-            
+
             if (!user.emailVerified) {
               elements.overlay?.classList.remove("active");
-              
+
               if (elements.errorText) {
-                elements.errorText.innerHTML = 'Please verify your email first. <a href="#" onclick="resendVerification(); return false;" style="color: #fff; text-decoration: underline;">Resend verification email</a>';
+                elements.errorText.innerHTML =
+                  'Please verify your email first. <a href="#" onclick="resendVerification(); return false;" style="color: #fff; text-decoration: underline;">Resend verification email</a>';
               }
               elements.error?.classList.remove("d-none");
-              
+
               await auth.signOut();
               return;
             }
-            
-            rememberMe 
+
+            rememberMe
               ? localStorage.setItem("rememberedEmail", email)
               : localStorage.removeItem("rememberedEmail");
-            
+
             if (elements.successText) {
-              elements.successText.textContent = "Login successful! Redirecting to dashboard...";
+              elements.successText.textContent =
+                "Login successful! Redirecting to dashboard...";
             }
             elements.success?.classList.remove("d-none");
-            
-            setTimeout(() => window.location.href = "dashboard.html", 1000);
-            
+
+            setTimeout(() => (window.location.href = "dashboard.html"), 1000);
           } catch (err) {
             elements.overlay?.classList.remove("active");
-            
-            const errorMsg = err.code === 'auth/too-many-requests' 
-              ? "Too many login attempts. Please try again later"
-              : err.code === 'auth/network-request-failed'
+
+            const errorMsg =
+              err.code === "auth/too-many-requests"
+                ? "Too many login attempts. Please try again later"
+                : err.code === "auth/network-request-failed"
                 ? "Network error. Please check your connection"
                 : "Invalid email or password";
-            
+
             showError(elements, errorMsg);
           }
         });
-        
+
         function showError(elements, message) {
           if (elements.errorText) elements.errorText.textContent = message;
           elements.error?.classList.remove("d-none");
         }
-        
-        window.resendVerification = async function() {
+
+        window.resendVerification = async function () {
           const email = document.getElementById("login-email")?.value.trim();
-          const password = document.getElementById("login-password")?.value.trim();
-          
+          const password = document
+            .getElementById("login-password")
+            ?.value.trim();
+
           if (!email || !password) {
             alert("Please enter your email and password first");
             return;
           }
-          
+
           try {
-            const userCredential = await auth.signInWithEmailAndPassword(email, password);
+            const userCredential = await auth.signInWithEmailAndPassword(
+              email,
+              password
+            );
             await userCredential.user.sendEmailVerification();
             await auth.signOut();
-            
-            alert("✅ Verification email sent! Please check your inbox (and spam folder).");
+
+            alert(
+              "✅ Verification email sent! Please check your inbox (and spam folder)."
+            );
           } catch (err) {
             alert("Error sending verification email. Please try again.");
             console.error(err);
           }
         };
 
-        document.getElementById("toggle-password")?.addEventListener("click", function() {
-          const pwdInput = document.getElementById("login-password");
-          const icon = this.querySelector("i");
-          
-          if (!pwdInput || !icon) return;
-          
-          const isPassword = pwdInput.type === "password";
-          pwdInput.type = isPassword ? "text" : "password";
-          icon.classList.toggle("bi-eye", !isPassword);
-          icon.classList.toggle("bi-eye-slash", isPassword);
-        });
+        document
+          .getElementById("toggle-password")
+          ?.addEventListener("click", function () {
+            const pwdInput = document.getElementById("login-password");
+            const icon = this.querySelector("i");
+
+            if (!pwdInput || !icon) return;
+
+            const isPassword = pwdInput.type === "password";
+            pwdInput.type = isPassword ? "text" : "password";
+            icon.classList.toggle("bi-eye", !isPassword);
+            icon.classList.toggle("bi-eye-slash", isPassword);
+          });
 
         // Enable Enter key to submit form
         const emailInput = document.getElementById("login-email");
         const passwordInput = document.getElementById("login-password");
-        
+
         const handleEnterKey = (event) => {
-          if (event.key === 'Enter' || event.keyCode === 13) {
+          if (event.key === "Enter" || event.keyCode === 13) {
             event.preventDefault();
             const form = document.getElementById("login-form");
             const submitButton = form?.querySelector('button[type="submit"]');
@@ -369,9 +393,10 @@
             }
           }
         };
-        
-        if (emailInput) emailInput.addEventListener('keypress', handleEnterKey);
-        if (passwordInput) passwordInput.addEventListener('keypress', handleEnterKey);
+
+        if (emailInput) emailInput.addEventListener("keypress", handleEnterKey);
+        if (passwordInput)
+          passwordInput.addEventListener("keypress", handleEnterKey);
 
         const savedEmail = localStorage.getItem("rememberedEmail");
         if (savedEmail) {
@@ -381,9 +406,9 @@
           if (rememberBox) rememberBox.checked = true;
         }
       }
-      
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initializeApp);
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initializeApp);
       } else {
         initializeApp();
       }
