@@ -245,6 +245,23 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
 
+        // Enable Firebase Auth persistence for "Remember Me"
+        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+          .then(() => {
+            console.log('✅ Auth persistence enabled (LOCAL)');
+          })
+          .catch((error) => {
+            console.error('❌ Auth persistence error:', error);
+          });
+
+        // Check if user is already logged in
+        auth.onAuthStateChanged((user) => {
+          if (user && user.emailVerified) {
+            console.log('✅ User already logged in, redirecting to dashboard...');
+            window.location.href = "dashboard.html";
+          }
+        });
+
         const loginForm = document.getElementById("login-form");
 
         if (!loginForm) return;
@@ -310,6 +327,16 @@
             rememberMe
               ? localStorage.setItem("rememberedEmail", email)
               : localStorage.removeItem("rememberedEmail");
+
+            // Store user session info
+            const userInfo = {
+              uid: user.uid,
+              email: user.email,
+              emailVerified: user.emailVerified,
+              lastLogin: new Date().toISOString()
+            };
+            localStorage.setItem('vulnexal_user', JSON.stringify(userInfo));
+            console.log('✅ User session saved to localStorage');
 
             if (elements.successText) {
               elements.successText.textContent =

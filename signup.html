@@ -302,6 +302,15 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
         
+        // Enable Firebase Auth persistence
+        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+          .then(() => {
+            console.log('✅ Auth persistence enabled (LOCAL)');
+          })
+          .catch((error) => {
+            console.error('❌ Auth persistence error:', error);
+          });
+        
         console.log("Firebase initialized successfully!");
         const signupForm = document.getElementById("signup-form");
         

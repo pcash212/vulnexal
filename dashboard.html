@@ -1086,7 +1086,20 @@
       const auth = firebase.auth();
       const db = firebase.firestore();
 
+      // Enable Firebase Auth persistence (stay logged in)
+      auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+        .then(() => {
+          console.log('✅ Auth persistence enabled (LOCAL)');
+        })
+        .catch((error) => {
+          console.error('❌ Auth persistence error:', error);
+        });
+
       const logout = () => {
+        // Clear local storage and session storage on logout
+        localStorage.removeItem('vulnexal_user');
+        sessionStorage.clear();
+        
         auth
           .signOut()
           .then(() => (window.location.href = "index.html"))
@@ -1626,10 +1639,22 @@
         auth.onAuthStateChanged(async (user) => {
           if (!user) {
             console.log("No user logged in, redirecting to login...");
+            // Clear any stale data
+            localStorage.removeItem('vulnexal_user');
             window.location.href = "index.html";
           } else {
             console.log("User authenticated:", user.email);
             console.log("Loading dashboard data...");
+
+            // Store user info in localStorage for quick access
+            const userInfo = {
+              uid: user.uid,
+              email: user.email,
+              emailVerified: user.emailVerified,
+              lastLogin: new Date().toISOString()
+            };
+            localStorage.setItem('vulnexal_user', JSON.stringify(userInfo));
+            console.log('✅ User data cached in localStorage');
 
             await loadUserData(user);
             loadScanHistory();
