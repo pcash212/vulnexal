@@ -4,9 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#20c997" />
-    <meta name="description" content="Professional web vulnerability scanner and security testing tool" />
+    <meta
+      name="description"
+      content="Professional web vulnerability scanner and security testing tool"
+    />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
     <meta name="apple-mobile-web-app-title" content="Vulnexal" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="shortcut icon" href="favicon.svg" />
@@ -1055,6 +1061,32 @@
     </div>
 
     <script>
+      document.body.style.visibility = 'hidden';
+
+      function checkDashboardSession() {
+        try {
+          var session = localStorage.getItem('vulnexal_session');
+          if (session) {
+            var data = JSON.parse(session);
+            if (data.uid && data.loginTime) {
+              var age = Date.now() - data.loginTime;
+              if (age < 30 * 24 * 60 * 60 * 1000) {
+                document.body.style.visibility = 'visible';
+                return true;
+              } else {
+                localStorage.removeItem('vulnexal_session');
+              }
+            }
+          }
+        } catch (e) {}
+        return false;
+      }
+
+      var hasSession = checkDashboardSession();
+      if (!hasSession) {
+        window.location.replace('index.html');
+      }
+
       const firebaseConfig = {
         apiKey: "AIzaSyBJ3XdoHatJhGOKFcnoAYMTqPGYW3Jymk4",
         authDomain: "web-vulnerability-scanne-f066b.firebaseapp.com",
@@ -1069,20 +1101,21 @@
       const auth = firebase.auth();
       const db = firebase.firestore();
 
-      auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-        .then(function() {
-          console.log('Auth persistence enabled');
+      auth
+        .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+        .then(function () {
+          console.log("Auth persistence enabled");
         })
-        .catch(function(error) {
-          console.error('Persistence error:', error);
+        .catch(function (error) {
+          console.error("Persistence error:", error);
         });
 
       const logout = () => {
         try {
-          localStorage.removeItem('vulnexal_session');
-          localStorage.removeItem('rememberedEmail');
-        } catch(e) {
-          console.error('Storage clear error:', e);
+          localStorage.removeItem("vulnexal_session");
+          localStorage.removeItem("rememberedEmail");
+        } catch (e) {
+          console.error("Storage clear error:", e);
         }
         auth
           .signOut()
@@ -1625,15 +1658,15 @@
         function checkAuth() {
           checkAttempts++;
           var currentUser = auth.currentUser;
-          
+
           if (currentUser) {
             console.log("User authenticated:", currentUser.email);
             console.log("Loading dashboard data...");
-            
+
             loadUserData(currentUser);
             loadScanHistory();
             setupScanFunctionality();
-            
+
             console.log("Dashboard initialized successfully!");
           } else if (checkAttempts < maxAttempts) {
             setTimeout(checkAuth, 200);
@@ -1644,29 +1677,24 @@
         }
 
         auth.onAuthStateChanged(async (user) => {
-          if (!user) {
-            console.log("No Firebase user, checking session...");
-            var session = null;
-            try {
-              session = JSON.parse(localStorage.getItem('vulnexal_session'));
-            } catch(e) {}
+          if (user) {
+            console.log("Firebase user authenticated:", user.email);
+            document.body.style.visibility = 'visible';
             
-            if (!session || !session.uid) {
-              console.log("No valid session, redirecting to login...");
-              window.location.href = "index.html";
-            } else {
-              console.log("Session found, waiting for Firebase...");
-              setTimeout(checkAuth, 500);
-            }
-          } else {
-            console.log("User authenticated:", user.email);
-            console.log("Loading dashboard data...");
-
             await loadUserData(user);
             loadScanHistory();
             setupScanFunctionality();
 
             console.log("Dashboard initialized successfully!");
+          } else {
+            console.log("No Firebase user detected");
+            setTimeout(function() {
+              if (!auth.currentUser) {
+                console.log("Still no user, session likely expired");
+                localStorage.removeItem("vulnexal_session");
+                window.location.replace("index.html");
+              }
+            }, 2000);
           }
         });
       });

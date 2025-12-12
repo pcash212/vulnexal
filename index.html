@@ -192,6 +192,31 @@
     <script src="modal.js"></script>
     <script src="pwa.js"></script>
     <script>
+      document.body.style.visibility = 'hidden';
+
+      function checkSession() {
+        try {
+          var session = localStorage.getItem('vulnexal_session');
+          if (session) {
+            var data = JSON.parse(session);
+            if (data.uid && data.loginTime) {
+              var age = Date.now() - data.loginTime;
+              if (age < 30 * 24 * 60 * 60 * 1000) {
+                window.location.replace('dashboard.html');
+                return true;
+              } else {
+                localStorage.removeItem('vulnexal_session');
+              }
+            }
+          }
+        } catch (e) {}
+        return false;
+      }
+
+      if (!checkSession()) {
+        document.body.style.visibility = 'visible';
+      }
+
       let retryCount = 0;
       const maxRetries = 50;
 
@@ -239,7 +264,9 @@
         auth.onAuthStateChanged(function(user) {
           if (user && user.emailVerified) {
             console.log('User already logged in, redirecting...');
-            window.location.href = "dashboard.html";
+            window.location.replace('dashboard.html');
+          } else {
+            document.body.style.visibility = 'visible';
           }
         });
 
@@ -316,7 +343,7 @@
                 uid: user.uid,
                 email: user.email,
                 verified: user.emailVerified,
-                loginTime: new Date().toISOString()
+                loginTime: Date.now()
               }));
             } catch (e) {
               console.error('Session storage error:', e);
@@ -328,7 +355,7 @@
             }
             elements.success?.classList.remove("d-none");
 
-            setTimeout(() => (window.location.href = "dashboard.html"), 1000);
+            setTimeout(() => (window.location.replace("dashboard.html")), 500);
           } catch (err) {
             elements.overlay?.classList.remove("active");
 
