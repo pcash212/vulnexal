@@ -250,23 +250,16 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="validation.js"></script>
     <script src="modal.js"></script>
+    <script src="auth-manager.js"></script>
     <script src="pwa.js"></script>
     <script>
-      let retryCount = 0;
-      const maxRetries = 50;
-      
-      function initializeApp() {
+      function init() {
         if (typeof firebase === 'undefined') {
-          retryCount++;
-          if (retryCount >= maxRetries) {
-            alert("Error: Firebase SDK failed to load. Please check your internet connection and refresh the page.");
-            return;
-          }
-          setTimeout(initializeApp, 100);
+          setTimeout(init, 100);
           return;
         }
         
-        const firebaseConfig = {
+        var config = {
           apiKey: "AIzaSyBJ3XdoHatJhGOKFcnoAYMTqPGYW3Jymk4",
           authDomain: "web-vulnerability-scanne-f066b.firebaseapp.com",
           projectId: "web-vulnerability-scanne-f066b",
@@ -276,7 +269,7 @@
           measurementId: "G-HFS9XCX60H"
         };
 
-        let app;
+        var app;
         try {
           app = firebase.initializeApp(firebaseConfig);
         } catch (error) {
@@ -286,15 +279,8 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
         
-        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-          .then(function() {
-            console.log('Auth persistence enabled');
-          })
-          .catch(function(error) {
-            console.error('Persistence error:', error);
-          });
+        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(function() {});
         
-        console.log("Firebase initialized successfully!");
         const signupForm = document.getElementById("signup-form");
         
         if (!signupForm) return;
@@ -361,8 +347,6 @@
             
             elements.overlay?.classList.remove("active");
             
-            console.log("✅ Verification email sent to:", formData.email);
-            console.log("⚠️ Check spam folder if you don't see the email");
 
             if (elements.successText) {
               elements.successText.innerHTML = `
@@ -491,9 +475,9 @@
       }
       
       if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initializeApp);
+        document.addEventListener('DOMContentLoaded', init);
       } else {
-        initializeApp();
+        init();
       }
     </script>
   </body>

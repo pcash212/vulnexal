@@ -594,7 +594,6 @@
               #0f2027 0%,
               #203a43 50%,
               #2c5364 100%
-            );
             border: 2px solid #00ff88;
             border-radius: 15px;
             box-shadow: 0 0 40px rgba(0, 255, 136, 0.3);
@@ -771,7 +770,6 @@
                       135deg,
                       rgba(0, 255, 136, 0.15),
                       rgba(0, 204, 106, 0.1)
-                    );
                     border: 2px solid rgba(0, 255, 136, 0.4);
                     border-radius: 12px;
                   "
@@ -1107,6 +1105,7 @@
 
     <script src="validation.js"></script>
     <script src="modal.js"></script>
+    <script src="auth-manager.js"></script>
     <script src="pwa.js"></script>
     <div id="process-loading-overlay" class="process-loading-overlay">
       <div class="process-loading-content">
@@ -1142,23 +1141,12 @@
       auth
         .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
         .then(function () {
-          console.log("Auth persistence enabled");
+          AuthManager.init();
         })
-        .catch(function (error) {
-          console.error("Persistence error:", error);
-        });
+        .catch(function (error) {});
 
-      const logout = () => {
-        try {
-          localStorage.removeItem("vulnexal_session");
-          localStorage.removeItem("rememberedEmail");
-        } catch (e) {
-          console.error("Storage clear error:", e);
-        }
-        auth
-          .signOut()
-          .then(() => (window.location.href = "index.html"))
-          .catch(() => (window.location.href = "index.html"));
+      const logout = function() {
+        AuthManager.logout();
       };
 
       async function loadUserData(user) {
@@ -1166,6 +1154,12 @@
         if (!nameEl) return;
 
         let name = "User";
+        
+        var check = await AuthManager.verify();
+        if (!check.valid) {
+          logout();
+          return;
+        }
 
         try {
           const doc = await db.collection("users").doc(user.uid).get();
@@ -1211,7 +1205,6 @@
                 <tr>
                   <td colspan="5" class="text-center text-muted py-3">No scans yet. Start scanning!</td>
                 </tr>
-              `;
               return;
             }
 
@@ -1296,12 +1289,10 @@
                     }')">Delete</button>
                   </td>
                 </tr>
-              `;
               scanHistoryTable.innerHTML += row;
             });
           }
         } catch (error) {
-          console.error("Error loading scan history:", error);
         }
       }
 
@@ -1309,7 +1300,6 @@
         const confirmed = await VulnexalModal.confirm(
           "Are you sure you want to delete this scan? This action cannot be undone.",
           "Delete Scan"
-        );
 
         if (confirmed) {
           try {
@@ -1326,14 +1316,11 @@
               "Scan has been deleted successfully!",
               "Deleted",
               { autoClose: 2000 }
-            );
             loadScanHistory();
           } catch (error) {
-            console.error("Error deleting scan:", error);
             VulnexalModal.error(
               "Failed to delete scan. Please try again.",
               "Error"
-            );
           }
         }
       }
@@ -1342,25 +1329,19 @@
         const scanButton = document.getElementById("scan-website-btn");
         const urlInput = document.getElementById("scan-url-input");
 
-        console.log("Setting up scan functionality...");
-        console.log("Scan button found:", scanButton);
-        console.log("URL input found:", urlInput);
 
         if (urlInput) {
           setupRealtimeValidation(urlInput, Validator.validateURL);
         }
 
         if (scanButton && urlInput) {
-          console.log("Attaching click event to scan button");
           scanButton.addEventListener("click", async function () {
-            console.log("Scan button clicked!");
             const url = urlInput.value.trim();
 
             if (!url) {
               VulnexalModal.warning(
                 "Please enter a valid URL to scan",
                 "URL Required"
-              );
               return;
             }
 
@@ -1435,22 +1416,17 @@
                     score: scorePercentage,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                   });
-                console.log(
-                  `✓ Scan saved to Firestore with score: ${scorePercentage}%`
-                );
               }
 
               displayScanResults(results);
 
               await loadScanHistory();
             } catch (error) {
-              console.error("Scan error:", error);
               VulnexalModal.error(
                 "Failed to scan website: " +
                   error.message +
                   ". Please check the URL and try again.",
                 "Scan Error"
-              );
             } finally {
               if (overlay) overlay.classList.remove("active");
             }
@@ -1470,21 +1446,17 @@
       }
 
       function displayScanResults(results) {
-        console.log("Displaying scan results:", results);
 
         const resultsSection = document.querySelector(".results-section");
         if (!resultsSection) {
-          console.error("Results section not found!");
           return;
         }
 
         const resultCards = resultsSection.querySelectorAll(".result-card");
         if (resultCards.length === 0) {
-          console.error("No result cards found!");
           return;
         }
 
-        console.log(`Found ${resultCards.length} result cards to update`);
 
         const vulnKeys = [
           "httpsValidation",
@@ -1558,9 +1530,6 @@
                 }
               }
 
-              console.log(
-                `Updated card ${index + 1} (${key}): ${vulnData.status}`
-              );
             }
           }
         });
@@ -1675,20 +1644,11 @@
         }
 
         const passedChecks = totalChecks - vulnerableChecks;
-        console.log(`Overall Score: ${scorePercentage}% (${rating})`);
-        console.log(
-          `Passed: ${passedChecks}/${totalChecks}, Vulnerable: ${vulnerableChecks}, Critical: ${criticalIssues}`
-        );
-        console.log(
-          `Score Calculation: ${totalScore}/${maxScore} points (weighted by severity)`
-        );
 
         resultsSection.style.display = "block";
-        console.log("✓ Scan results displayed successfully!");
       }
 
       window.addEventListener("load", function () {
-        console.log("Dashboard page loaded, checking authentication...");
 
         var checkAttempts = 0;
         var maxAttempts = 30;
@@ -1698,37 +1658,29 @@
           var currentUser = auth.currentUser;
 
           if (currentUser) {
-            console.log("User authenticated:", currentUser.email);
-            console.log("Loading dashboard data...");
 
             loadUserData(currentUser);
             loadScanHistory();
             setupScanFunctionality();
 
-            console.log("Dashboard initialized successfully!");
           } else if (checkAttempts < maxAttempts) {
             setTimeout(checkAuth, 200);
           } else {
-            console.log("No user logged in, redirecting...");
             window.location.href = "index.html";
           }
         }
 
         auth.onAuthStateChanged(async (user) => {
           if (user) {
-            console.log("Firebase user authenticated:", user.email);
             showDashboard();
             
             await loadUserData(user);
             loadScanHistory();
             setupScanFunctionality();
 
-            console.log("Dashboard initialized successfully!");
           } else {
-            console.log("No Firebase user detected");
             setTimeout(function() {
               if (!auth.currentUser) {
-                console.log("Still no user, session likely expired");
                 localStorage.removeItem("vulnexal_session");
                 window.location.replace("index.html");
               }
@@ -1739,8 +1691,6 @@
 
       async function runScan(url) {
         try {
-          console.log(`Starting vulnerability scan for: ${url}`);
-          console.log(`Running 6 security checks...`);
 
           const httpsEnabled =
             document.getElementById("https-check")?.checked || false;
@@ -1755,7 +1705,6 @@
           const urlPatternsEnabled =
             document.getElementById("url-patterns-check")?.checked || false;
 
-          console.log("Enabled checks:", {
             https: httpsEnabled,
             availability: availabilityEnabled,
             clickjacking: clickjackEnabled,
@@ -1809,7 +1758,6 @@
             },
           };
 
-          console.log(`Running ${checksToRun.length} security checks...`);
 
           const checks = await Promise.allSettled(checksToRun);
 
@@ -1832,9 +1780,6 @@
                     severity: "high",
                   };
 
-            console.log(
-              `${checkNames[key]}: ${results.vulnerabilities[key].status} - ${results.vulnerabilities[key].details}`
-            );
           });
 
           Object.keys(results.vulnerabilities).forEach((key) => {
@@ -1860,14 +1805,9 @@
           });
 
           results.status = "completed";
-          console.log(`✓ Scan completed for: ${url}`);
-          console.log(
-            `Summary: ${results.summary.passed} passed, ${results.summary.failed} failed, ${results.summary.warnings} warnings`
-          );
 
           return results;
         } catch (error) {
-          console.error(`✗ Scan failed for ${url}:`, error);
           return {
             url: url,
             timestamp: Date.now(),
@@ -2003,8 +1943,6 @@
             } else {
               protectionLevel = "weak";
               details.push(
-                `X-Frame-Options present but weak: ${xFrameOptions}`
-              );
               severity = "medium";
             }
           }
@@ -2015,13 +1953,11 @@
             severity = "low";
             details.push(
               "Protected with Content-Security-Policy frame-ancestors directive"
-            );
           }
 
           if (protectionLevel === "none") {
             details.push(
               "No clickjacking protection headers (X-Frame-Options or CSP frame-ancestors) found - site may be vulnerable to UI redressing attacks"
-            );
             return {
               status: "unprotected",
               details: details.join(". "),
@@ -2038,7 +1974,6 @@
           if (error.name === "AbortError") {
             throw new Error(
               "Request timeout while checking clickjacking protection"
-            );
           }
           throw new Error(`Clickjacking check failed: ${error.message}`);
         }
@@ -2328,8 +2263,6 @@
           const domainTLD = domain.substring(domain.lastIndexOf("."));
           if (suspiciousTLDs.includes(domainTLD)) {
             issues.push(
-              `suspicious TLD (${domainTLD}) commonly used in phishing`
-            );
             severity = severity === "high" ? "high" : "medium";
           }
 
@@ -2354,11 +2287,8 @@
           const fullUrl = (urlPath + queryAndHash).toLowerCase();
           const foundKeywords = suspiciousKeywords.filter((keyword) =>
             fullUrl.includes(keyword)
-          );
           if (foundKeywords.length >= 3) {
             issues.push(
-              `multiple phishing keywords (${foundKeywords.join(", ")})`
-            );
             severity = severity === "high" ? "high" : "medium";
           }
 

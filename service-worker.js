@@ -1,4 +1,4 @@
-var CACHE_NAME = 'vulnexal-v2-persistence';
+var CACHE_NAME = 'vulnexal-v3-clean';
 var CACHE_URLS = [
   '/',
   '/index.html',
@@ -9,6 +9,7 @@ var CACHE_URLS = [
   '/style.css',
   '/modal.js',
   '/validation.js',
+  '/auth-manager.js',
   '/pwa.js',
   '/favicon.svg',
   'https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css',

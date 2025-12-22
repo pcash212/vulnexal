@@ -279,6 +279,7 @@
 
     <script src="validation.js"></script>
     <script src="modal.js"></script>
+    <script src="auth-manager.js"></script>
     <script src="pwa.js"></script>
     <script>
       function showLoginPage() {
@@ -325,15 +326,12 @@
 
         auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
           .then(function() {
-            console.log('Auth persistence enabled');
           })
           .catch(function(error) {
-            console.error('Persistence error:', error);
           });
 
         auth.onAuthStateChanged(function(user) {
           if (user && user.emailVerified) {
-            console.log('User already logged in, redirecting...');
             window.location.replace('dashboard.html');
           } else {
             document.body.style.visibility = 'visible';
@@ -383,11 +381,11 @@
           elements.overlay?.classList.add("active");
 
           try {
-            const userCredential = await auth.signInWithEmailAndPassword(
+            var userCredential = await auth.signInWithEmailAndPassword(
               email,
               password
             );
-            const user = userCredential.user;
+            var user = userCredential.user;
 
             if (!user.emailVerified) {
               elements.overlay?.classList.remove("active");
@@ -401,6 +399,9 @@
               await auth.signOut();
               return;
             }
+            
+            var token = await user.getIdToken();
+            if (!token) throw new Error('Auth token failed');
 
             if (rememberMe) {
               localStorage.setItem("rememberedEmail", email);
@@ -411,13 +412,11 @@
             try {
               localStorage.setItem('vulnexal_session', JSON.stringify({
                 uid: user.uid,
-                email: user.email,
-                verified: user.emailVerified,
                 loginTime: Date.now()
               }));
-            } catch (e) {
-              console.error('Session storage error:', e);
-            }
+            } catch (e) {}
+            
+            AuthManager.start();
 
             if (elements.successText) {
               elements.successText.textContent =
@@ -425,7 +424,9 @@
             }
             elements.success?.classList.remove("d-none");
 
-            setTimeout(() => (window.location.replace("dashboard.html")), 500);
+            setTimeout(function() {
+              window.location.replace("dashboard.html");
+            }, 500);
           } catch (err) {
             elements.overlay?.classList.remove("active");
 
@@ -469,7 +470,6 @@
             );
           } catch (err) {
             alert("Error sending verification email. Please try again.");
-            console.error(err);
           }
         };
 
