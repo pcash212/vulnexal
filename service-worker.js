@@ -1,4 +1,4 @@
-var CACHE_NAME = 'vulnexal-v7-fixed';
+var CACHE_NAME = 'vulnexal-v8';
 var CACHE_URLS = [
   '/index.html',
   '/dashboard.html',
@@ -53,8 +53,8 @@ self.addEventListener('fetch', function(event) {
       url.includes('googleapis') || 
       url.includes('gstatic') ||
       url.includes('google.com') ||
+      url.includes('cdnjs.cloudflare.com') ||
       req.method !== 'GET') {
-    event.respondWith(fetch(req));
     return;
   }
 
@@ -71,7 +71,11 @@ self.addEventListener('fetch', function(event) {
       })
       .catch(function() {
         return caches.match(req).then(function(cached) {
-          return cached || caches.match('/index.html');
+          if (cached) return cached;
+          if (req.mode === 'navigate') {
+            return caches.match('/index.html');
+          }
+          return new Response('Offline', { status: 503 });
         });
       })
   );
