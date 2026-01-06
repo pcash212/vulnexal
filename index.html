@@ -4,19 +4,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#20c997" />
-    <meta name="description" content="Professional web vulnerability scanner and security testing tool" />
+    <meta
+      name="description"
+      content="Professional web vulnerability scanner and security testing tool"
+    />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
     <meta name="apple-mobile-web-app-title" content="Vulnexal" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="shortcut icon" href="favicon.svg" />
     <link rel="apple-touch-icon" href="icon-192.svg" />
     <link rel="manifest" href="manifest.json" />
     <title>Vulnexal</title>
-    
+
     <style>
-      body { visibility: hidden; opacity: 0; transition: opacity 0.3s; }
-      body.show { visibility: visible; opacity: 1; }
+      body {
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      body.show {
+        visibility: visible;
+        opacity: 1;
+      }
       #auth-splash {
         position: fixed;
         top: 0;
@@ -44,7 +57,7 @@
         font-size: 36px;
         font-weight: bold;
         color: #fff;
-        font-family: 'Arial Black', sans-serif;
+        font-family: "Arial Black", sans-serif;
         letter-spacing: 2px;
       }
       .splash-spinner {
@@ -56,33 +69,37 @@
         animation: spin 0.8s linear infinite;
       }
       @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
       }
     </style>
-    
+
     <script>
-      (function() {
+      (function () {
         try {
-          var session = localStorage.getItem('vulnexal_session');
+          var session = localStorage.getItem("vulnexal_session");
           if (session) {
             var data = JSON.parse(session);
             if (data.uid && data.loginTime) {
               var age = Date.now() - data.loginTime;
               if (age < 30 * 24 * 60 * 60 * 1000) {
-                window.location.replace('dashboard.html');
+                window.location.replace("dashboard.html");
                 return;
               } else {
-                localStorage.removeItem('vulnexal_session');
+                localStorage.removeItem("vulnexal_session");
               }
             }
           }
         } catch (e) {}
-        
-        setTimeout(function() {
-          var splash = document.getElementById('auth-splash');
-          if (splash) splash.style.display = 'none';
-          document.body.classList.add('show');
+
+        setTimeout(function () {
+          var splash = document.getElementById("auth-splash");
+          if (splash) splash.style.display = "none";
+          document.body.classList.add("show");
         }, 500);
       })();
     </script>
@@ -102,15 +119,33 @@
   <body>
     <div id="auth-splash">
       <div class="splash-logo">
-        <svg width="60" height="60" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          width="60"
+          height="60"
+          viewBox="0 0 100 100"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <defs>
             <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:#20c997;stop-opacity:1" />
-              <stop offset="100%" style="stop-color:#0caf7d;stop-opacity:1" />
+              <stop offset="0%" style="stop-color: #20c997; stop-opacity: 1" />
+              <stop
+                offset="100%"
+                style="stop-color: #0caf7d; stop-opacity: 1"
+              />
             </linearGradient>
           </defs>
-          <path d="M 50 20 L 75 30 L 75 50 Q 75 68 50 82 Q 25 68 25 50 L 25 30 Z" fill="url(#grad)"/>
-          <path d="M 38 50 L 46 60 L 64 38" fill="none" stroke="#000" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path
+            d="M 50 20 L 75 30 L 75 50 Q 75 68 50 82 Q 25 68 25 50 L 25 30 Z"
+            fill="url(#grad)"
+          />
+          <path
+            d="M 38 50 L 46 60 L 64 38"
+            fill="none"
+            stroke="#000"
+            stroke-width="5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
         </svg>
         <div class="splash-text">Vulnexal</div>
       </div>
@@ -279,13 +314,14 @@
 
     <script src="validation.js"></script>
     <script src="modal.js"></script>
+    <script src="escape-helper.js"></script>
     <script src="auth-manager.js"></script>
     <script src="pwa.js"></script>
     <script>
       function showLoginPage() {
-        var splash = document.getElementById('auth-splash');
-        if (splash) splash.style.display = 'none';
-        document.body.classList.add('show');
+        var splash = document.getElementById("auth-splash");
+        if (splash) splash.style.display = "none";
+        document.body.classList.add("show");
       }
 
       let retryCount = 0;
@@ -324,17 +360,16 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-          .then(function() {
-          })
-          .catch(function(error) {
-          });
+        auth
+          .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+          .then(function () {})
+          .catch(function (error) {});
 
-        auth.onAuthStateChanged(function(user) {
+        auth.onAuthStateChanged(function (user) {
           if (user && user.emailVerified) {
-            window.location.replace('dashboard.html');
+            window.location.replace("dashboard.html");
           } else {
-            document.body.style.visibility = 'visible';
+            document.body.style.visibility = "visible";
           }
         });
 
@@ -399,9 +434,9 @@
               await auth.signOut();
               return;
             }
-            
+
             var token = await user.getIdToken();
-            if (!token) throw new Error('Auth token failed');
+            if (!token) throw new Error("Auth token failed");
 
             if (rememberMe) {
               localStorage.setItem("rememberedEmail", email);
@@ -410,12 +445,15 @@
             }
 
             try {
-              localStorage.setItem('vulnexal_session', JSON.stringify({
-                uid: user.uid,
-                loginTime: Date.now()
-              }));
+              localStorage.setItem(
+                "vulnexal_session",
+                JSON.stringify({
+                  uid: user.uid,
+                  loginTime: Date.now(),
+                })
+              );
             } catch (e) {}
-            
+
             AuthManager.start();
 
             if (elements.successText) {
@@ -424,7 +462,7 @@
             }
             elements.success?.classList.remove("d-none");
 
-            setTimeout(function() {
+            setTimeout(function () {
               window.location.replace("dashboard.html");
             }, 500);
           } catch (err) {

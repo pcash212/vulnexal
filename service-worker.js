@@ -1,6 +1,5 @@
-var CACHE_NAME = 'vulnexal-v3-clean';
+var CACHE_NAME = 'vulnexal-v7-fixed';
 var CACHE_URLS = [
-  '/',
   '/index.html',
   '/dashboard.html',
   '/signup.html',
@@ -9,19 +8,23 @@ var CACHE_URLS = [
   '/style.css',
   '/modal.js',
   '/validation.js',
+  '/escape-helper.js',
   '/auth-manager.js',
   '/pwa.js',
   '/favicon.svg',
-  'https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css',
-  'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.0/font/bootstrap-icons.min.css',
-  'https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js'
+  '/icon-192.svg',
+  '/icon-512.svg'
 ];
 
 self.addEventListener('install', function(event) {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(function(cache) {
-      return cache.addAll(CACHE_URLS);
-    })
+    caches.open(CACHE_NAME)
+      .then(function(cache) {
+        return cache.addAll(CACHE_URLS);
+      })
+      .catch(function() {
+        return Promise.resolve();
+      })
   );
   self.skipWaiting();
 });
@@ -30,48 +33,46 @@ self.addEventListener('activate', function(event) {
   event.waitUntil(
     caches.keys().then(function(names) {
       return Promise.all(
-        names.map(function(name) {
-          if (name !== CACHE_NAME) {
-            return caches.delete(name);
-          }
+        names.filter(function(name) {
+          return name !== CACHE_NAME;
+        }).map(function(name) {
+          return caches.delete(name);
         })
       );
+    }).then(function() {
+      return self.clients.claim();
     })
   );
-  self.clients.claim();
 });
 
 self.addEventListener('fetch', function(event) {
-  var url = event.request.url;
+  var req = event.request;
+  var url = req.url;
   
-  if (url.includes('firebasejs') || 
+  if (url.includes('firebase') || 
       url.includes('googleapis') || 
-      url.includes('firebaseio') || 
       url.includes('gstatic') ||
-      event.request.method !== 'GET') {
+      url.includes('google.com') ||
+      req.method !== 'GET') {
+    event.respondWith(fetch(req));
     return;
   }
 
   event.respondWith(
-    caches.match(event.request).then(function(cached) {
-      if (cached) {
-        return cached;
-      }
-
-      return fetch(event.request).then(function(response) {
-        if (!response || response.status !== 200 || response.type !== 'basic') {
-          return response;
+    fetch(req)
+      .then(function(response) {
+        if (response && response.status === 200) {
+          var clone = response.clone();
+          caches.open(CACHE_NAME).then(function(cache) {
+            cache.put(req, clone);
+          });
         }
-
-        var toCache = response.clone();
-        caches.open(CACHE_NAME).then(function(cache) {
-          cache.put(event.request, toCache);
-        });
-
         return response;
-      }).catch(function() {
-        return caches.match('/index.html');
-      });
-    })
+      })
+      .catch(function() {
+        return caches.match(req).then(function(cached) {
+          return cached || caches.match('/index.html');
+        });
+      })
   );
 });

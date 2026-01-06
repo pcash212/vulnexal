@@ -250,6 +250,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="validation.js"></script>
     <script src="modal.js"></script>
+    <script src="escape-helper.js"></script>
     <script src="auth-manager.js"></script>
     <script src="pwa.js"></script>
     <script>
@@ -346,7 +347,6 @@
             await userCredential.user.sendEmailVerification();
             
             elements.overlay?.classList.remove("active");
-            
 
             if (elements.successText) {
               elements.successText.innerHTML = `
@@ -357,7 +357,7 @@
                     <h5 style="margin-top: 15px; color: #856404;">📧 Verification Email Sent!</h5>
                     <p style="color: #856404; margin: 10px 0;">
                       We've sent a verification link to:<br>
-                      <strong style="font-size: 16px;">${formData.email}</strong>
+                      <strong style="font-size: 16px;">${escapeHtml(formData.email)}</strong>
                     </p>
                     <hr style="border-color: #ffc107; margin: 15px 0;">
                     <p style="color: #856404; font-weight: bold; margin: 10px 0;">

@@ -6,9 +6,7 @@ if ('serviceWorker' in navigator) {
           registration.update();
         }, 60000);
       })
-      .catch(function(error) {
-        console.error('Service Worker failed:', error);
-      });
+      .catch(function(error) {});
   });
 }
 
