@@ -59,26 +59,31 @@
 
     <script>
       (function () {
-        try {
-          var session = localStorage.getItem("vulnexal_session");
-          if (!session) {
+        var checking = sessionStorage.getItem("auth_checking");
+        sessionStorage.removeItem("auth_checking");
+        
+        if (checking !== "true") {
+          try {
+            var session = localStorage.getItem("vulnexal_session");
+            if (!session) {
+              window.location.replace("index.html");
+              return;
+            }
+            var data = JSON.parse(session);
+            if (!data.uid || !data.loginTime) {
+              localStorage.removeItem("vulnexal_session");
+              window.location.replace("index.html");
+              return;
+            }
+            var age = Date.now() - data.loginTime;
+            if (age >= 30 * 24 * 60 * 60 * 1000) {
+              localStorage.removeItem("vulnexal_session");
+              window.location.replace("index.html");
+              return;
+            }
+          } catch (e) {
             window.location.replace("index.html");
-            return;
           }
-          var data = JSON.parse(session);
-          if (!data.uid || !data.loginTime) {
-            localStorage.removeItem("vulnexal_session");
-            window.location.replace("index.html");
-            return;
-          }
-          var age = Date.now() - data.loginTime;
-          if (age >= 30 * 24 * 60 * 60 * 1000) {
-            localStorage.removeItem("vulnexal_session");
-            window.location.replace("index.html");
-            return;
-          }
-        } catch (e) {
-          window.location.replace("index.html");
         }
       })();
     </script>

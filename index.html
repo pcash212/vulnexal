@@ -80,6 +80,17 @@
 
     <script>
       (function () {
+        var checking = sessionStorage.getItem("auth_checking");
+        if (checking === "true") {
+          sessionStorage.removeItem("auth_checking");
+          setTimeout(function () {
+            var splash = document.getElementById("auth-splash");
+            if (splash) splash.style.display = "none";
+            document.body.classList.add("show");
+          }, 500);
+          return;
+        }
+
         try {
           var session = localStorage.getItem("vulnexal_session");
           if (session) {
@@ -87,6 +98,7 @@
             if (data.uid && data.loginTime) {
               var age = Date.now() - data.loginTime;
               if (age < 30 * 24 * 60 * 60 * 1000) {
+                sessionStorage.setItem("auth_checking", "true");
                 window.location.replace("dashboard.html");
                 return;
               } else {
