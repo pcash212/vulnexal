@@ -59,31 +59,41 @@
 
     <script>
       (function () {
-        var checking = sessionStorage.getItem("auth_checking");
-        sessionStorage.removeItem("auth_checking");
-        
-        if (checking !== "true") {
-          try {
+        try {
+          var checking = sessionStorage.getItem("auth_checking");
+          sessionStorage.removeItem("auth_checking");
+          
+          if (checking !== "true") {
             var session = localStorage.getItem("vulnexal_session");
             if (!session) {
               window.location.replace("index.html");
               return;
             }
-            var data = JSON.parse(session);
-            if (!data.uid || !data.loginTime) {
+            try {
+              var data = JSON.parse(session);
+              if (!data || !data.uid || !data.loginTime) {
+                localStorage.removeItem("vulnexal_session");
+                window.location.replace("index.html");
+                return;
+              }
+              var age = Date.now() - data.loginTime;
+              if (age >= 30 * 24 * 60 * 60 * 1000) {
+                localStorage.removeItem("vulnexal_session");
+                window.location.replace("index.html");
+                return;
+              }
+            } catch (parseError) {
               localStorage.removeItem("vulnexal_session");
               window.location.replace("index.html");
               return;
             }
-            var age = Date.now() - data.loginTime;
-            if (age >= 30 * 24 * 60 * 60 * 1000) {
-              localStorage.removeItem("vulnexal_session");
-              window.location.replace("index.html");
-              return;
-            }
-          } catch (e) {
-            window.location.replace("index.html");
           }
+        } catch (e) {
+          try {
+            localStorage.clear();
+            sessionStorage.clear();
+          } catch (clearError) {}
+          window.location.replace("index.html");
         }
       })();
     </script>

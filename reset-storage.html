@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Storage - Vulnexal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: #1a1d29;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            text-align: center;
+            max-width: 600px;
+            background: #2a2d39;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            color: #20c997;
+            margin-bottom: 20px;
+        }
+        .btn {
+            background: #20c997;
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            background: #1ab386;
+            transform: translateY(-2px);
+        }
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+        .status.success {
+            background: rgba(32, 201, 151, 0.2);
+            border: 1px solid #20c997;
+            display: block;
+        }
+        .status.error {
+            background: rgba(220, 53, 69, 0.2);
+            border: 1px solid #dc3545;
+            display: block;
+        }
+        .info {
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid #ffc107;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        pre {
+            background: #1a1d29;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            text-align: left;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Storage Reset Tool</h1>
+        <p>This tool will help you fix any corrupted storage data.</p>
+        
+        <div class="info">
+            <strong>⚠️ Current Storage Status:</strong>
+            <pre id="storageInfo">Checking...</pre>
+        </div>
+
+        <button class="btn" onclick="clearAllStorage()">Clear All Storage</button>
+        <button class="btn" onclick="fixAndRedirect()">Fix & Go to Login</button>
+        
+        <div id="status" class="status"></div>
+    </div>
+
+    <script>
+        function displayStorageInfo() {
+            var info = "localStorage:\n";
+            try {
+                if (localStorage.length === 0) {
+                    info += "  (empty)\n";
+                } else {
+                    for (var i = 0; i < localStorage.length; i++) {
+                        var key = localStorage.key(i);
+                        var value = localStorage.getItem(key);
+                        info += "  " + key + ": " + (value.length > 50 ? value.substring(0, 50) + "..." : value) + "\n";
+                    }
+                }
+            } catch (e) {
+                info += "  ERROR: " + e.message + "\n";
+            }
+
+            info += "\nsessionStorage:\n";
+            try {
+                if (sessionStorage.length === 0) {
+                    info += "  (empty)\n";
+                } else {
+                    for (var i = 0; i < sessionStorage.length; i++) {
+                        var key = sessionStorage.key(i);
+                        var value = sessionStorage.getItem(key);
+                        info += "  " + key + ": " + (value.length > 50 ? value.substring(0, 50) + "..." : value) + "\n";
+                    }
+                }
+            } catch (e) {
+                info += "  ERROR: " + e.message + "\n";
+            }
+
+            document.getElementById("storageInfo").textContent = info;
+        }
+
+        function clearAllStorage() {
+            try {
+                localStorage.clear();
+                sessionStorage.clear();
+                
+                if ('caches' in window) {
+                    caches.keys().then(function(names) {
+                        for (var name of names) {
+                            caches.delete(name);
+                        }
+                    });
+                }
+
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                        for (var registration of registrations) {
+                            registration.unregister();
+                        }
+                    });
+                }
+
+                showStatus("✅ All storage cleared successfully! Refresh the page to see updated status.", "success");
+                setTimeout(displayStorageInfo, 1000);
+            } catch (e) {
+                showStatus("❌ Error: " + e.message, "error");
+            }
+        }
+
+        function fixAndRedirect() {
+            clearAllStorage();
+            setTimeout(function() {
+                window.location.href = "/index.html";
+            }, 1500);
+        }
+
+        function showStatus(message, type) {
+            var status = document.getElementById("status");
+            status.textContent = message;
+            status.className = "status " + type;
+        }
+
+        displayStorageInfo();
+    </script>
+</body>
+</html>
